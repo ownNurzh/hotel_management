@@ -24,7 +24,7 @@ const menuTemplate = [
 				click: () => {
 					dialog.showMessageBox({
 						title: "About",
-						message: app.getName(),
+						message: app.name,
 						detail: aboutText,
 						buttons: ["OK"],
 						icon: appIconPath,
