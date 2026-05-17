@@ -1,13 +1,53 @@
-const { app, BrowserWindow } = require("electron/main");
+const { app, BrowserWindow, Menu, dialog } = require("electron/main");
 
 const path = require("node:path");
+
+const isMac = process.platform === "darwin";
+
+const appIconPath = path.join(__dirname, "electron", "app-icon.png");
+
+const aboutText = `
+Project : ${app.getVersion()}v
+Electron : ${process.versions.electron}v
+Node : ${process.versions.node}v
+-
+Қонақ үйді брондау және басқару жүйесі.
+Система бронирования и управления отелями
+Hotel reservation and management system
+`;
+const menuTemplate = [
+	{
+		label: app.name,
+		submenu: [
+			{
+				label: "О проекте",
+				click: () => {
+					dialog.showMessageBox({
+						title: "About",
+						message: app.getName(),
+						detail: aboutText,
+						buttons: ["OK"],
+						icon: appIconPath,
+					});
+				},
+			},
+			,
+			{ type: "separator" },
+			{ role: "quit" },
+		],
+	},
+];
+
+const menu = Menu.buildFromTemplate(menuTemplate);
+Menu.setApplicationMenu(menu);
 
 const createWindow = () => {
 	const win = new BrowserWindow({
 		width: 800,
 		height: 600,
+		icon: appIconPath,
 		webPreferences: {
-			preload: path.join(__dirname, "preload.js"),
+			preload: path.join(__dirname, "electron", "preload.js"),
 		},
 	});
 	if (app.isPackaged) {
