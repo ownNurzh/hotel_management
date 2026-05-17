@@ -10,8 +10,13 @@ const createWindow = () => {
 			preload: path.join(__dirname, "preload.js"),
 		},
 	});
-
-	win.loadFile("index.html");
+	if (app.isPackaged) {
+		//win.loadFile("")
+		console.log("production");
+	} else {
+		win.loadURL("http://localhost:3000/");
+		console.log("development");
+	}
 };
 
 app.whenReady().then(() => {
