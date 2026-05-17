@@ -1,2 +1,3 @@
 Қонақ үйді брондау және басқару жүйесі.
-Hotel reservation and management system
+Система бронирования и управления отелями.
+Hotel reservation and management system.
