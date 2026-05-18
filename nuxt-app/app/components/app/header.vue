@@ -1,1 +1,1 @@
-<template>Header</template>
+<template><el-header>Header</el-header></template>
