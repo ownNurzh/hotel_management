@@ -7,8 +7,8 @@ const initMenu = require("./menu");
 initMenu();
 const createWindow = () => {
 	const win = new BrowserWindow({
-		width: 800,
-		height: 600,
+		width: 1200,
+		height: 700,
 		icon: config.appIconPath,
 		webPreferences: {
 			preload: path.join(__dirname, "electron", "preload.js"),
