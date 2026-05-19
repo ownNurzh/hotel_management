@@ -1,9 +1,14 @@
 const { app, BrowserWindow, Menu, dialog } = require("electron/main");
 
 const path = require("node:path");
+const fs = require("node:fs");
 const config = require("./config");
 const initMenu = require("./menu");
-
+function initApp() {
+	if (!fs.existsSync(config.userDataPath)) {
+		fs.mkdirSync(config.userDataPath, { recursive: true });
+	}
+}
 initMenu();
 const createWindow = () => {
 	const win = new BrowserWindow({
@@ -25,7 +30,7 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
 	createWindow();
-
+	initApp();
 	app.on("activate", () => {
 		if (BrowserWindow.getAllWindows().length === 0) {
 			createWindow();
