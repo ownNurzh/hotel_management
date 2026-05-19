@@ -1,56 +1,15 @@
 const { app, BrowserWindow, Menu, dialog } = require("electron/main");
 
 const path = require("node:path");
+const config = require("./config");
+const initMenu = require("./menu");
 
-const isMac = process.platform === "darwin";
-
-const appIconPath = path.join(__dirname, "electron", "app-icon.png");
-
-const aboutText = `
-Project : ${app.getVersion()}v
-Electron : ${process.versions.electron}v
-Node : ${process.versions.node}v
--
-Қонақ үйді брондау және басқару жүйесі.
-Система бронирования и управления отелями
-Hotel reservation and management system
-`;
-const menuTemplate = [
-	{
-		label: app.name,
-		submenu: [
-			{
-				label: "О проекте",
-				click: () => {
-					dialog.showMessageBox({
-						title: "About",
-						message: app.name,
-						detail: aboutText,
-						buttons: ["OK"],
-						icon: appIconPath,
-					});
-				},
-			},
-			,
-			{ type: "separator" },
-			{ role: "reload" },
-			{ role: "forceReload" },
-			{ role: "togglefullscreen" },
-			{ role: "toggleDevTools" },
-			{ type: "separator" },
-			{ role: "quit" },
-		],
-	},
-];
-
-const menu = Menu.buildFromTemplate(menuTemplate);
-Menu.setApplicationMenu(menu);
-
+initMenu();
 const createWindow = () => {
 	const win = new BrowserWindow({
 		width: 800,
 		height: 600,
-		icon: appIconPath,
+		icon: config.appIconPath,
 		webPreferences: {
 			preload: path.join(__dirname, "electron", "preload.js"),
 		},
