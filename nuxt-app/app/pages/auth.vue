@@ -41,6 +41,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
 
 				<el-form
 					ref="formRef"
+					status-icon
 					:model="form"
 					:rules="rules"
 					label-position="top"
@@ -52,6 +53,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
 							v-model="form.login"
 							placeholder="Введите логин"
 							:prefix-icon="User"
+							clearable
 						/>
 					</el-form-item>
 
@@ -62,6 +64,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
 							placeholder="Введите пароль"
 							:prefix-icon="Lock"
 							show-password
+							clearable
 						/>
 					</el-form-item>
 
