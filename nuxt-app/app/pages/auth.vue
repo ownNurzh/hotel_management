@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, reactive } from "vue";
 import { User, Lock } from "@element-plus/icons-vue";
 import type { FormInstance, FormRules } from "element-plus";
 
@@ -20,14 +19,13 @@ const rules: FormRules = {
 	password: [{ required: true, message: "Введите пароль", trigger: "blur" }],
 };
 
-const handleSubmit = async () => {
-	if (!formRef.value) return;
-	await formRef.value.validate((valid) => {
+const submitForm = (formEl: FormInstance | undefined) => {
+	if (!formEl) return;
+	formEl.validate((valid) => {
 		if (valid) {
-			loading.value = true;
-			setTimeout(() => {
-				loading.value = false;
-			}, 1500);
+			console.log("submit!");
+		} else {
+			console.log("error submit!");
 		}
 	});
 };
@@ -47,7 +45,7 @@ const handleSubmit = async () => {
 					:rules="rules"
 					label-position="top"
 					size="large"
-					@submit.prevent="handleSubmit"
+					@submit.prevent="submitForm(formRef)"
 				>
 					<el-form-item label="Логин" prop="login">
 						<el-input
@@ -72,7 +70,7 @@ const handleSubmit = async () => {
 							type="primary"
 							:loading="loading"
 							style="width: 100%"
-							@click="handleSubmit"
+							@click="submitForm(formRef)"
 						>
 							{{ loading ? "Входим..." : "Войти" }}
 						</el-button>
