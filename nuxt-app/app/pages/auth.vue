@@ -1,12 +1,11 @@
-<script setup lang="ts">
+<script setup>
 import { User, Lock } from "@element-plus/icons-vue";
-import type { FormInstance, FormRules } from "element-plus";
 
 definePageMeta({
 	layout: "clean",
 });
 
-const formRef = ref<FormInstance>();
+const formRef = ref();
 const loading = ref(false);
 
 const form = reactive({
@@ -14,15 +13,16 @@ const form = reactive({
 	password: "",
 });
 
-const rules: FormRules = {
+const rules = {
 	login: [{ required: true, message: "Введите логин", trigger: "blur" }],
 	password: [{ required: true, message: "Введите пароль", trigger: "blur" }],
 };
 
-const submitForm = (formEl: FormInstance | undefined) => {
+const submitForm = (formEl) => {
 	if (!formEl) return;
 	formEl.validate((valid) => {
 		if (valid) {
+			window?.auth?.login("test", "password");
 			console.log("submit!");
 		} else {
 			console.log("error submit!");

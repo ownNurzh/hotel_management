@@ -4,7 +4,11 @@ const path = require("node:path");
 const fs = require("node:fs");
 const config = require("./config");
 const initMenu = require("./menu");
+const db = require("./db");
+const authHandlers = require("./ipc/auth");
+
 function initApp() {
+	authHandlers(db);
 	if (!fs.existsSync(config.userDataPath)) {
 		fs.mkdirSync(config.userDataPath, { recursive: true });
 	}
@@ -16,7 +20,7 @@ const createWindow = () => {
 		height: 700,
 		icon: config.appIconPath,
 		webPreferences: {
-			preload: path.join(__dirname, "electron", "preload.js"),
+			preload: path.join(__dirname, "preload.js"),
 		},
 	});
 	if (app.isPackaged) {
