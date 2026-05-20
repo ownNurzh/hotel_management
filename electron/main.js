@@ -10,11 +10,11 @@ const allIpcHandlers = require("./ipc");
 const initSeedDatas = require("./db/seed");
 
 function initApp() {
-	initSeedDatas();
-	allIpcHandlers();
 	if (!fs.existsSync(config.userDataPath)) {
 		fs.mkdirSync(config.userDataPath, { recursive: true });
 	}
+	initSeedDatas();
+	allIpcHandlers();
 }
 initMenu();
 const createWindow = () => {

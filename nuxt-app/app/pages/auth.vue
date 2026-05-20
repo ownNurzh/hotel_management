@@ -20,9 +20,9 @@ const rules = {
 
 const submitForm = (formEl) => {
 	if (!formEl) return;
-	formEl.validate((valid) => {
+	formEl.validate(async (valid) => {
 		if (valid) {
-			const result = window?.auth?.login(form.login, form.password);
+			const result = await window?.auth?.login(form.login, form.password);
 
 			console.log(result);
 		} else {
