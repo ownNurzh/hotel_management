@@ -9,4 +9,4 @@ const db = new DatabaseSync(path.join(config.userDataPath, "hotel.db"));
 const initSQL = fs.readFileSync(path.join(__dirname, "init.sql"), "utf-8");
 db.exec(initSQL);
 
-module.exports = { db };
+module.exports = db;

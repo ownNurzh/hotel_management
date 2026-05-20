@@ -22,8 +22,9 @@ const submitForm = (formEl) => {
 	if (!formEl) return;
 	formEl.validate((valid) => {
 		if (valid) {
-			window?.auth?.login("test", "password");
-			console.log("submit!");
+			const result = window?.auth?.login(form.login, form.password);
+
+			console.log(result);
 		} else {
 			console.log("error submit!");
 		}

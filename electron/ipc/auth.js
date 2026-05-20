@@ -1,12 +1,15 @@
 const { ipcMain } = require("electron");
 
-module.exports = () => {
-	ipcMain.handle("auth:login", async (event, login, password) => {
-		console.log(event, login, password);
-		return false;
+const { authService } = require("../services");
+
+module.exports = (db) => {
+	ipcMain.handle("auth:login", (event, login, password) => {
+		const result = authService.login(login, password);
+		console.log(result);
+		return result;
 	});
 
-	ipcMain.handle("auth:register", async (event, login, password) => {
+	ipcMain.handle("auth:register", (event, login, password) => {
 		return false;
 	});
 };
