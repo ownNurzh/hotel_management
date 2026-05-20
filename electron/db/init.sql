@@ -12,3 +12,6 @@ CREATE TABLE IF NOT EXISTS users (
     role_id INTEGER NOT NULL DEFAULT 1,
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
+
+INSERT OR IGNORE INTO roles (name) VALUES ('admin');
+INSERT OR IGNORE INTO roles (name) VALUES ('reception');

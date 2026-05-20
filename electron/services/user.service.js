@@ -5,7 +5,7 @@ class User {
 	getAll() {
 		return this.db.prepare("SELECT * FROM users").all();
 	}
-	create(login, first_name, second_name, password, roleId) {
+	create(first_name, second_name, login, password, roleId) {
 		return this.db
 			.prepare(
 				"INSERT INTO users (first_name,second_name,login, password, role_id) VALUES (?, ?, ?, ?, ?)",
