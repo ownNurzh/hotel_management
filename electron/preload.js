@@ -5,3 +5,9 @@ contextBridge.exposeInMainWorld("auth", {
 		return ipcRenderer.invoke("auth:login", login, password);
 	},
 });
+
+contextBridge.exposeInMainWorld("session", {
+	isLogged: () => {
+		return ipcRenderer.invoke("session:isLogged");
+	},
+});

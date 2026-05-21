@@ -16,7 +16,7 @@ class Session {
 		this.store.delete(this.sessiongName);
 	}
 
-	isLoggedIn() {
+	isLogged() {
 		return this.store.has(this.sessiongName);
 	}
 }

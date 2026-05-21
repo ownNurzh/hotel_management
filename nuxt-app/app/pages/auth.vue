@@ -23,7 +23,9 @@ const submitForm = (formEl) => {
 	formEl.validate(async (valid) => {
 		if (valid) {
 			const result = await window?.auth?.login(form.login, form.password);
-
+			if (result) {
+				navigateTo("home");
+			}
 			console.log(result);
 		} else {
 			console.log("error submit!");
