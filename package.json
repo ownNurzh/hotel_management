@@ -13,5 +13,7 @@
 	"devDependencies": {
 		"electron": "^42.0.1"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"electron-store": "^11.0.2"
+	}
 }
