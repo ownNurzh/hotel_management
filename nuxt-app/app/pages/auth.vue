@@ -24,7 +24,7 @@ const submitForm = (formEl) => {
 		if (valid) {
 			const result = await window?.auth?.login(form.login, form.password);
 			if (result) {
-				navigateTo("home");
+				navigateTo("/monitoring/main");
 			}
 			console.log(result);
 		} else {
