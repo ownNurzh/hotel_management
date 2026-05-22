@@ -1,13 +1,13 @@
-const excludePaths = ["/auth", "/"];
 export default defineNuxtRouteMiddleware(async (to) => {
-	if (import.meta.server) {
-		return;
-	}
+	if (import.meta.server) return;
 
-	if (excludePaths.includes(to.path)) return;
 	const isLogged = await window?.session?.isLogged();
 
-	if (!isLogged) {
+	if (to.path === "/") {
+		return navigateTo(isLogged ? "/monitoring/main" : "/auth");
+	}
+
+	if (!isLogged && to.path !== "/auth") {
 		return navigateTo("/auth");
 	}
 });

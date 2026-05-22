@@ -2,7 +2,7 @@
 	<AppLayout>
 		<el-container>
 			<el-aside
-				width="200px"
+				width="500px"
 				style="background-color: #0f172a; height: 100vh"
 				><Menu
 			/></el-aside>
