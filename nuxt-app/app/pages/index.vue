@@ -1,7 +1,7 @@
 <script setup>
 const isLogged = await window?.session?.isLogged();
 if (isLogged) {
-	navigateTo("home");
+	navigateTo("/monitoring/main");
 } else {
 	navigateTo("auth");
 }

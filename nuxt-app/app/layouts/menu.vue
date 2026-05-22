@@ -1,13 +1,3 @@
-<!-- <template>
-	<AppLayout>
-		<el-container direction="vertical">
-			<AppHeader />
-			<el-main><slot /></el-main>
-			<AppFooter />
-		</el-container>
-	</AppLayout>
-</template> -->
-
 <template>
 	<AppLayout>
 		<el-container>
