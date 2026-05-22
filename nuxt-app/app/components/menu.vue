@@ -10,7 +10,7 @@ import {
 </script>
 <template>
 	<el-menu
-		default-active="1"
+		default-active="/monitoring/main"
 		router
 		style="
 			--el-menu-bg-color: #0f172a;
