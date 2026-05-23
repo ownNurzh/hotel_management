@@ -1,6 +1,6 @@
 <script setup>
 import { User, Lock } from "@element-plus/icons-vue";
-
+import { ElMessage } from "element-plus";
 definePageMeta({
 	layout: "clean",
 });
@@ -24,8 +24,16 @@ const submitForm = (formEl) => {
 		if (valid) {
 			const result = await window?.auth?.login(form.login, form.password);
 			if (result) {
-				navigateTo("/monitoring/main");
+				ElMessage({
+					message: "Вы успешно вошли!",
+					type: "success",
+				});
+				return navigateTo("/monitoring/main");
 			}
+			ElMessage({
+				message: "Неверный пароль или такого аккаунта нет.",
+				type: "error",
+			});
 			console.log(result);
 		} else {
 			console.log("error submit!");
