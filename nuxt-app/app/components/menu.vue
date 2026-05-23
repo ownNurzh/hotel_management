@@ -7,6 +7,7 @@ import {
 	Management,
 	Setting,
 } from "@element-plus/icons-vue";
+const profileVisible = ref(false);
 </script>
 <template>
 	<el-menu
@@ -16,6 +17,9 @@ import {
 			--el-menu-bg-color: #0f172a;
 			--el-menu-text-color: #fff;
 			--el-menu-active-color: #00bce4;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
 		"
 	>
 		<span
@@ -67,5 +71,59 @@ import {
 				<span>Приложение</span>
 			</el-menu-item>
 		</el-sub-menu>
+		<div style="flex: 1" />
+		<div
+			@click="profileVisible = true"
+			style="
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				padding: 12px 16px;
+				border-top: 1px solid #1e293b;
+				cursor: pointer;
+			"
+		>
+			<el-avatar style="background-color: #00bce4; flex-shrink: 0">
+				O
+			</el-avatar>
+			<el-divider direction="vertical" />
+			<div style="overflow: hidden">
+				<div
+					style="
+						color: #fff;
+						font-size: 14px;
+						font-weight: 500;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					"
+				>
+					Admin
+				</div>
+				<div
+					style="
+						color: #94a3b8;
+						font-size: 12px;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					"
+				>
+					owner
+				</div>
+			</div>
+		</div>
+		<el-dialog
+			v-model="profileVisible"
+			align-center
+			title="Профиль"
+			width="25%"
+		>
+			<el-divider>
+				<el-avatar size="large" style="background-color: #00bce4">
+					<span style="font-size: 20px">O</span>
+				</el-avatar></el-divider
+			>
+		</el-dialog>
 	</el-menu>
 </template>
