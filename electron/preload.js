@@ -17,3 +17,12 @@ contextBridge.exposeInMainWorld("session", {
 		return ipcRenderer.invoke("session:clear");
 	},
 });
+
+contextBridge.exposeInMainWorld("user", {
+	getByLogin: (login) => {
+		return ipcRenderer.invoke("user:getByLogin", login);
+	},
+	getAll: () => {
+		return ipcRenderer.invoke("user:getAll");
+	},
+});

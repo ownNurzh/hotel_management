@@ -17,6 +17,20 @@ class User {
 			.prepare("SELECT * FROM users WHERE login = ? AND password = ?")
 			.get(login, password);
 	}
+	getByLogin(login) {
+		const sql = `
+        SELECT 
+            users.id,
+            users.first_name,
+            users.second_name,
+            users.login,
+            roles.name AS role_name
+        FROM users
+        JOIN roles ON users.role_id = roles.id
+        WHERE users.login = ?
+    `;
+		return this.db.prepare(sql).get(login);
+	}
 }
 
 module.exports = User;

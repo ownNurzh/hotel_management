@@ -8,13 +8,18 @@ import {
 	Setting,
 	SwitchButton,
 } from "@element-plus/icons-vue";
-
+import { ElMessage } from "element-plus";
 const sessionDatas = await window?.session?.get();
-
+const userDatas = await window?.user?.getByLogin(sessionDatas.login);
 async function leave() {
 	await window?.session?.clear();
+	ElMessage({
+		message: "Вы вышли.",
+		type: "info",
+	});
 	return navigateTo("/auth");
 }
+const profileVisible = ref(false);
 </script>
 <template>
 	<el-menu
@@ -107,7 +112,7 @@ async function leave() {
 						text-overflow: ellipsis;
 					"
 				>
-					{{ sessionDatas.role }}
+					{{ userDatas.role_name }}
 				</div>
 				<div
 					style="
@@ -118,7 +123,7 @@ async function leave() {
 						text-overflow: ellipsis;
 					"
 				>
-					{{ sessionDatas.login }}
+					{{ userDatas.login }}
 				</div>
 			</div>
 			<el-divider direction="vertical" />
@@ -129,5 +134,39 @@ async function leave() {
 				@click="leave()"
 			/>
 		</div>
+		<el-dialog
+			align-center
+			v-model="profileVisible"
+			:title="'Профиль - ' + userDatas.login"
+			width="25%"
+			center
+		>
+			<el-divider>
+				<el-avatar
+					size="large"
+					style="background-color: #00bce4; font-size: 20px"
+				>
+					<span
+						style="font-weight: bold; text-transform: uppercase"
+						>{{ userDatas.login.substring(0, 1) }}</span
+					>
+				</el-avatar></el-divider
+			>
+			<el-descriptions border :column="1" style="margin-top: 50px">
+				<el-descriptions-item
+					v-for="(key, value) in userDatas"
+					:label="key"
+					:key="key"
+					align="center"
+				>
+					{{ value }}
+				</el-descriptions-item>
+			</el-descriptions>
+			<template #footer>
+				<el-button type="danger" @click="leave()"
+					>Выйти</el-button
+				></template
+			>
+		</el-dialog>
 	</el-menu>
 </template>
