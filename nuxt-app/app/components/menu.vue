@@ -6,8 +6,14 @@ import {
 	Avatar,
 	Management,
 	Setting,
+	SwitchButton,
 } from "@element-plus/icons-vue";
-const profileVisible = ref(false);
+
+const userDatas = ref({ login: "owner", role: "admin" });
+
+function leave() {
+	return navigateTo("/auth");
+}
 </script>
 <template>
 	<el-menu
@@ -84,7 +90,9 @@ const profileVisible = ref(false);
 			"
 		>
 			<el-avatar style="background-color: #00bce4; flex-shrink: 0">
-				O
+				<span style="font-weight: bold; font-size: 15px">{{
+					userDatas.login.substring(0, 1)
+				}}</span>
 			</el-avatar>
 			<el-divider direction="vertical" />
 			<div style="overflow: hidden">
@@ -98,7 +106,7 @@ const profileVisible = ref(false);
 						text-overflow: ellipsis;
 					"
 				>
-					Admin
+					{{ userDatas.role }}
 				</div>
 				<div
 					style="
@@ -109,21 +117,16 @@ const profileVisible = ref(false);
 						text-overflow: ellipsis;
 					"
 				>
-					owner
+					{{ userDatas.login }}
 				</div>
 			</div>
+			<el-divider direction="vertical" />
+			<el-button
+				type="danger"
+				:icon="SwitchButton"
+				circle
+				@click="leave()"
+			/>
 		</div>
-		<el-dialog
-			v-model="profileVisible"
-			align-center
-			title="Профиль"
-			width="25%"
-		>
-			<el-divider>
-				<el-avatar size="large" style="background-color: #00bce4">
-					<span style="font-size: 20px">O</span>
-				</el-avatar></el-divider
-			>
-		</el-dialog>
 	</el-menu>
 </template>
