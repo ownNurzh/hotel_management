@@ -9,9 +9,10 @@ import {
 	SwitchButton,
 } from "@element-plus/icons-vue";
 
-const userDatas = ref({ login: "owner", role: "admin" });
+const sessionDatas = await window?.session?.get();
 
-function leave() {
+async function leave() {
+	await window?.session?.clear();
 	return navigateTo("/auth");
 }
 </script>
@@ -90,7 +91,7 @@ function leave() {
 			"
 		>
 			<el-avatar style="background-color: #00bce4; flex-shrink: 0">
-				<span style="font-weight: bold; font-size: 15px">{{
+				<span style="font-weight: bold; text-transform: uppercase">{{
 					userDatas.login.substring(0, 1)
 				}}</span>
 			</el-avatar>
@@ -106,7 +107,7 @@ function leave() {
 						text-overflow: ellipsis;
 					"
 				>
-					{{ userDatas.role }}
+					{{ sessionDatas.role }}
 				</div>
 				<div
 					style="
@@ -117,7 +118,7 @@ function leave() {
 						text-overflow: ellipsis;
 					"
 				>
-					{{ userDatas.login }}
+					{{ sessionDatas.login }}
 				</div>
 			</div>
 			<el-divider direction="vertical" />
