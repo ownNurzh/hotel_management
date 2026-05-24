@@ -42,8 +42,9 @@ const profileVisible = ref(false);
 				align-items: center;
 				color: white;
 				margin-bottom: 2px;
+				gap: 3px;
 			"
-			>HotelSys<el-icon><Management /></el-icon
+			>Hotel System<el-icon><Management /></el-icon
 		></span>
 
 		<el-sub-menu index="/monitoring">
