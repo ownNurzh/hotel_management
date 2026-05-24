@@ -24,3 +24,4 @@ class Room {
 		return this.db.prepare("SELECT * FROM rooms").all();
 	}
 }
+module.exports = Room;
