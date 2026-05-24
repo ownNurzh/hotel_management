@@ -167,24 +167,17 @@ const RoomDatas = [
 					size="large"
 					@submit.prevent="submitForm(roomFormRef)"
 				>
-					<el-form-item label="Название" prop="name">
+					<el-form-item label="Номер комнаты" prop="room_number">
 						<el-input
-							v-model="roomForm.name"
-							placeholder="Введите название"
+							v-model="roomForm.room_number"
+							placeholder="Введите номер комнаты"
 							:prefix-icon="InfoFilled"
 							clearable
 						/>
 					</el-form-item>
 
-					<el-form-item label="Цена" prop="price">
-						<el-input-number v-model="roomForm.price">
-							<template #suffix>
-								<span>KZT</span>
-							</template>
-						</el-input-number>
-					</el-form-item>
-					<el-form-item label="Вместимость" prop="capacity">
-						<el-input-number v-model="roomForm.capacity">
+					<el-form-item label="Тип комнаты" prop="room_type_id">
+						<el-input-number v-model="roomForm.room_type_id">
 						</el-input-number>
 					</el-form-item>
 					<el-form-item>
@@ -197,12 +190,12 @@ const RoomDatas = [
 					</el-form-item>
 				</el-form>
 				<el-divider></el-divider>
-				<el-table :data="RoomDatas" stripe height="200px">
+				<el-table :data="RoomDatas" stripe height="300px">
 					<el-table-column type="selection" width="55" />
 					<el-table-column prop="id" label="#" />
-					<el-table-column prop="name" label="Название" />
-					<el-table-column prop="price" label="Цена" />
-					<el-table-column prop="capacity" label="Вместимость" />
+					<el-table-column prop="room_number" label="Номер комнаты" />
+					<el-table-column prop="room_type_id" label="Тип комнаты" />
+					<el-table-column prop="status" label="Статус" />
 					<el-table-column fixed="right" label="Операций">
 						<template #default>
 							<el-button type="danger" size="small"
