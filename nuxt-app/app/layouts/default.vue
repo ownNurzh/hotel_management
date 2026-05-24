@@ -16,7 +16,7 @@
 				style="height: 100vh; background-color: #0f172a"
 				><Menu
 			/></el-aside>
-			<el-main><slot /></el-main>
+			<el-main style="height: 100vh; overflow-y: auto"><slot /></el-main>
 		</el-container>
 	</AppLayout>
 </template>
