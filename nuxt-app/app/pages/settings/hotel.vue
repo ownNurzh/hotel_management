@@ -72,8 +72,8 @@ const clearHotelDatas = async (formEl) => {
 			message: "Вы успешно очистили данные отеля!",
 			type: "success",
 		});
-		hotelDatas.value = { ...baseHotelDatas };
 	}
+	hotelDatas.value = { ...baseHotelDatas };
 };
 </script>
 <template>
