@@ -32,13 +32,49 @@ const hotelFormRules = {
 		},
 	],
 };
-
-const hotelDatas = reactive({
+const hotelDatasInDb = await window?.hotel?.get();
+const baseHotelDatas = {
 	name: "",
 	phone: "",
 	email: "",
 	addres: "",
-});
+};
+
+const hotelDatas = ref(hotelDatasInDb || { ...baseHotelDatas });
+const submitHotelForm = (formEl) => {
+	if (!formEl) return;
+	formEl.validate(async (valid) => {
+		if (valid) {
+			try {
+				await window?.hotel?.save(toRaw(hotelDatas.value));
+
+				ElMessage({
+					message: "Вы успешно сохранили данные отеля!",
+					type: "success",
+				});
+			} catch (e) {
+				ElMessage({
+					message: "Что то пошло не так. " + e,
+					type: "error",
+				});
+			}
+		} else {
+			console.log("error submit!");
+		}
+	});
+};
+const clearHotelDatas = async (formEl) => {
+	if (!formEl) return;
+	formEl.resetFields();
+	const result = await window?.hotel?.clear();
+	if (result) {
+		ElMessage({
+			message: "Вы успешно очистили данные отеля!",
+			type: "success",
+		});
+		hotelDatas.value = { ...baseHotelDatas };
+	}
+};
 </script>
 <template>
 	<el-row>
@@ -55,7 +91,7 @@ const hotelDatas = reactive({
 					:rules="hotelFormRules"
 					label-position="top"
 					size="large"
-					@submit.prevent="submitForm(hotelFormRef)"
+					@submit.prevent="submitHotelForm(hotelFormRef)"
 				>
 					<el-form-item label="Название отеля" prop="name">
 						<el-input
@@ -93,9 +129,16 @@ const hotelDatas = reactive({
 					<el-form-item>
 						<el-button
 							type="primary"
-							@click="submitForm(hotelFormRef)"
+							@click="submitHotelForm(hotelFormRef)"
 						>
 							Сохранить
+						</el-button>
+						<el-button
+							type="danger"
+							plain
+							@click="clearHotelDatas(hotelFormRef)"
+						>
+							Очистить
 						</el-button>
 					</el-form-item>
 				</el-form>
