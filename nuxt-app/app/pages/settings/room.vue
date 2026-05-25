@@ -118,7 +118,7 @@ const RoomFormRules = {
 	],
 };
 
-let RoomDatas = [
+const RoomDatas = ref([
 	{
 		id: 1,
 		room_number: "101",
@@ -143,7 +143,62 @@ let RoomDatas = [
 		room_type_id: 3,
 		status: 0,
 	},
-];
+]);
+
+async function refreshRooms() {
+	RoomDatas.value = await window?.room?.getAllRooms();
+}
+await refreshRooms();
+
+async function deleteRoom(id) {
+	const result = await window?.room?.deleteRoomById(id);
+	if (result) {
+		ElMessage({
+			message: `Вы успешно удалили комнату с id=${id}!`,
+			type: "success",
+		});
+		await refreshRooms();
+	} else {
+		ElMessage({
+			message: `Что то пошло не так!`,
+			type: "warning",
+		});
+	}
+}
+
+const submitRoomForm = (formEl) => {
+	if (!formEl) return;
+	formEl.validate(async (valid) => {
+		if (valid) {
+			try {
+				const result = await window?.room?.createRoom(
+					roomForm.room_number,
+					roomForm.room_type_id,
+				);
+				if (result) {
+					ElMessage({
+						message: "Вы успешно создали комнату!",
+						type: "success",
+					});
+					await refreshRooms();
+				} else {
+					ElMessage({
+						message: "Что то пошло не так.",
+						type: "warning",
+					});
+				}
+				console.log(result);
+			} catch (e) {
+				ElMessage({
+					message: "Что то пошло не так.",
+					type: "error",
+				});
+			}
+		} else {
+			console.log("error submit!");
+		}
+	});
+};
 </script>
 <template>
 	<el-row>
@@ -225,7 +280,7 @@ let RoomDatas = [
 					:rules="RoomFormRules"
 					label-position="top"
 					size="large"
-					@submit.prevent="submitForm(roomFormRef)"
+					@submit.prevent="submitRoomForm(roomFormRef)"
 				>
 					<el-form-item label="Номер комнаты" prop="room_number">
 						<el-input
@@ -243,7 +298,7 @@ let RoomDatas = [
 					<el-form-item>
 						<el-button
 							type="primary"
-							@click="submitForm(roomFormRef)"
+							@click="submitRoomForm(roomFormRef)"
 						>
 							Создать
 						</el-button>
@@ -257,10 +312,14 @@ let RoomDatas = [
 					<el-table-column prop="room_type_id" label="Тип комнаты" />
 					<el-table-column prop="status" label="Статус" />
 					<el-table-column fixed="right" label="Операций">
-						<template #default>
-							<el-button type="danger" size="small"
-								>Удалить</el-button
+						<template #default="{ row }">
+							<el-button
+								type="danger"
+								size="small"
+								@click="deleteRoom(row.id)"
 							>
+								Удалить
+							</el-button>
 						</template>
 					</el-table-column>
 				</el-table>

@@ -28,6 +28,7 @@ contextBridge.exposeInMainWorld("user", {
 });
 
 contextBridge.exposeInMainWorld("room", {
+	//room types
 	getAllRoomTypes: () => {
 		return ipcRenderer.invoke("roomTypes:get");
 	},
@@ -36,5 +37,15 @@ contextBridge.exposeInMainWorld("room", {
 	},
 	deleteRoomTypeById: (id) => {
 		return ipcRenderer.invoke("roomTypes:delete", id);
+	},
+	// room
+	getAllRooms: () => {
+		return ipcRenderer.invoke("room:get");
+	},
+	createRoom: (room_number, room_type_id) => {
+		return ipcRenderer.invoke("room:create", room_number, room_type_id);
+	},
+	deleteRoomById: (id) => {
+		return ipcRenderer.invoke("room:delete", id);
 	},
 });

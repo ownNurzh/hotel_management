@@ -26,5 +26,8 @@ class Room {
 	getAllRooms() {
 		return this.db.prepare("SELECT * FROM rooms").all();
 	}
+	deleteRoomById(id) {
+		return this.db.prepare("DELETE FROM rooms WHERE id = ?").run(id);
+	}
 }
 module.exports = Room;
