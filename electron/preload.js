@@ -28,10 +28,10 @@ contextBridge.exposeInMainWorld("user", {
 });
 
 contextBridge.exposeInMainWorld("room", {
-	getRoomTypes: () => {
-		return ipcRenderer.invoke("roomTypes:get", login);
+	getAllRoomTypes: () => {
+		return ipcRenderer.invoke("roomTypes:get");
 	},
-	getAllRoomTypes: (name, price, capacity) => {
+	createRoomType: (name, price, capacity) => {
 		return ipcRenderer.invoke("roomTypes:create", name, price, capacity);
 	},
 });

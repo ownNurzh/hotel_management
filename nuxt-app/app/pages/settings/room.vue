@@ -17,7 +17,7 @@ const RoomTypesFormRules = {
 	],
 };
 
-const RoomTypesDatas = [
+const RoomTypesDatas = ref([
 	{
 		id: 1,
 		name: "Standard",
@@ -36,7 +36,47 @@ const RoomTypesDatas = [
 		price: 20000,
 		capacity: 6,
 	},
-];
+]);
+
+async function refreshRoomTypes() {
+	RoomTypesDatas.value = await window?.room?.getAllRoomTypes();
+}
+await refreshRoomTypes();
+
+const submitRoomTypeForm = (formEl) => {
+	if (!formEl) return;
+	formEl.validate(async (valid) => {
+		if (valid) {
+			try {
+				const result = await window?.room?.createRoomType(
+					roomTypesForm.name,
+					roomTypesForm.price,
+					roomTypesForm.capacity,
+				);
+				if (result) {
+					ElMessage({
+						message: "Вы успешно создали тип комнаты!",
+						type: "success",
+					});
+					await refreshRoomTypes();
+				} else {
+					ElMessage({
+						message: "Что то пошло не так.",
+						type: "warning",
+					});
+				}
+				console.log(result);
+			} catch (e) {
+				ElMessage({
+					message: "Что то пошло не так.",
+					type: "error",
+				});
+			}
+		} else {
+			console.log("error submit!");
+		}
+	});
+};
 
 const roomFormRef = ref();
 
@@ -62,7 +102,7 @@ const RoomFormRules = {
 	],
 };
 
-const RoomDatas = [
+let RoomDatas = [
 	{
 		id: 1,
 		room_number: "101",
@@ -104,7 +144,7 @@ const RoomDatas = [
 					:rules="RoomTypesFormRules"
 					label-position="top"
 					size="large"
-					@submit.prevent="submitForm(roomTypesFormRef)"
+					@submit.prevent="submitRoomTypeForm(roomTypesFormRef)"
 				>
 					<el-form-item label="Название" prop="name">
 						<el-input
@@ -129,7 +169,7 @@ const RoomDatas = [
 					<el-form-item>
 						<el-button
 							type="primary"
-							@click="submitForm(roomTypesFormRef)"
+							@click="submitRoomTypeForm(roomTypesFormRef)"
 						>
 							Создать
 						</el-button>
