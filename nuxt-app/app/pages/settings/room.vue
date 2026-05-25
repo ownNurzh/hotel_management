@@ -322,7 +322,8 @@ const submitRoomForm = (formEl) => {
 									'info'
 								"
 								>{{
-									appConfig.roomStatus[row.status].name
+									appConfig.roomStatus[row.status].name ||
+									"None"
 								}}</el-tag
 							>
 						</template>
