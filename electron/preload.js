@@ -26,3 +26,12 @@ contextBridge.exposeInMainWorld("user", {
 		return ipcRenderer.invoke("user:getAll");
 	},
 });
+
+contextBridge.exposeInMainWorld("room", {
+	getRoomTypes: () => {
+		return ipcRenderer.invoke("roomTypes:get", login);
+	},
+	getAllRoomTypes: (name, price, capacity) => {
+		return ipcRenderer.invoke("roomTypes:create", name, price, capacity);
+	},
+});
