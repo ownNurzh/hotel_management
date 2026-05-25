@@ -1,6 +1,6 @@
 <script setup>
 import { InfoFilled } from "@element-plus/icons-vue";
-
+const appConfig = useAppConfig();
 const roomTypesFormRef = ref();
 
 const roomTypesForm = reactive({
@@ -309,12 +309,25 @@ const submitRoomForm = (formEl) => {
 					<el-table-column type="selection" width="55" />
 					<el-table-column prop="id" label="#" />
 					<el-table-column prop="room_number" label="Номер комнаты" />
-					<el-table-column prop="room_type_id" label="Тип комнаты" />
-					<el-table-column
-						prop="room_type_name"
-						label="Название типа комнаты"
-					/>
-					<el-table-column prop="status" label="Статус" />
+					<el-table-column prop="room_type_id" label="Тип комнаты">
+						<template #default="{ row }">
+							{{ row.room_type_name }}({{ row.room_type_id }})
+						</template>
+					</el-table-column>
+					<el-table-column prop="status" label="Статус">
+						<template #default="{ row }">
+							<el-tag
+								:type="
+									appConfig.roomStatus[row.status].type ||
+									'info'
+								"
+								>{{
+									appConfig.roomStatus[row.status].name
+								}}</el-tag
+							>
+						</template>
+					</el-table-column>
+
 					<el-table-column prop="created_at" label="Дата создание" />
 					<el-table-column fixed="right" label="Операций">
 						<template #default="{ row }">
