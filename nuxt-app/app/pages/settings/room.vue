@@ -310,7 +310,12 @@ const submitRoomForm = (formEl) => {
 					<el-table-column prop="id" label="#" />
 					<el-table-column prop="room_number" label="Номер комнаты" />
 					<el-table-column prop="room_type_id" label="Тип комнаты" />
+					<el-table-column
+						prop="room_type_name"
+						label="Название типа комнаты"
+					/>
 					<el-table-column prop="status" label="Статус" />
+					<el-table-column prop="created_at" label="Дата создание" />
 					<el-table-column fixed="right" label="Операций">
 						<template #default="{ row }">
 							<el-button

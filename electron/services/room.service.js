@@ -24,7 +24,14 @@ class Room {
 			.run(room_number, room_type_id);
 	}
 	getAllRooms() {
-		return this.db.prepare("SELECT * FROM rooms").all();
+		const sql = `
+		SELECT 
+			rooms.*,
+			room_types.name AS room_type_name
+		FROM rooms
+		LEFT JOIN room_types ON room_types.id = rooms.room_type_id
+`;
+		return this.db.prepare(sql).all();
 	}
 	deleteRoomById(id) {
 		return this.db.prepare("DELETE FROM rooms WHERE id = ?").run(id);
