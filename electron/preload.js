@@ -49,3 +49,18 @@ contextBridge.exposeInMainWorld("room", {
 		return ipcRenderer.invoke("room:delete", id);
 	},
 });
+
+contextBridge.exposeInMainWorld("hotel", {
+	isExist: () => {
+		return ipcRenderer.invoke("hotel:isExist");
+	},
+	get: () => {
+		return ipcRenderer.invoke("hotel:get");
+	},
+	clear: () => {
+		return ipcRenderer.invoke("hotel:clear");
+	},
+	save: (data) => {
+		return ipcRenderer.invoke("hotel:save", data);
+	},
+});
