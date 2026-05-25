@@ -244,6 +244,13 @@ const submitRoomForm = (formEl) => {
 						>
 							Создать
 						</el-button>
+						<el-button
+							type="danger"
+							plain
+							@click="roomTypesFormRef.resetFields()"
+						>
+							Очистить
+						</el-button>
 					</el-form-item>
 				</el-form>
 				<el-divider></el-divider>
@@ -301,6 +308,13 @@ const submitRoomForm = (formEl) => {
 							@click="submitRoomForm(roomFormRef)"
 						>
 							Создать
+						</el-button>
+						<el-button
+							type="danger"
+							plain
+							@click="roomFormRef.resetFields()"
+						>
+							Очистить
 						</el-button>
 					</el-form-item>
 				</el-form>
