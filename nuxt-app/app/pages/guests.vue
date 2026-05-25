@@ -44,7 +44,7 @@ const guestsDatas = ref([
 ]);
 
 async function refreshGuests() {
-	guestsDatas.value = await window?.guest?.getAllGuests();
+	guestsDatas.value = await window?.guest?.getAll();
 }
 await refreshGuests();
 
@@ -69,7 +69,7 @@ const submitGuestsForm = (formEl) => {
 	formEl.validate(async (valid) => {
 		if (valid) {
 			try {
-				const result = await window?.guest?.createGuest(
+				const result = await window?.guest?.create(
 					guestForm.first_name,
 					guestForm.second_name,
 					guestForm.document_number,
@@ -132,7 +132,7 @@ const filterTableData = computed(() =>
 				>
 					<el-form-item label="Имя" prop="first_name">
 						<el-input
-							v-model="guestsDatas.first_name"
+							v-model="guestForm.first_name"
 							placeholder="Введите имя"
 							:prefix-icon="InfoFilled"
 							clearable
@@ -141,7 +141,7 @@ const filterTableData = computed(() =>
 
 					<el-form-item label="Фамилия" prop="second_name">
 						<el-input
-							v-model="guestsDatas.second_name"
+							v-model="guestForm.second_name"
 							placeholder="Введите фамилию"
 							:prefix-icon="InfoFilled"
 							clearable
@@ -152,7 +152,7 @@ const filterTableData = computed(() =>
 						prop="document_number"
 					>
 						<el-input
-							v-model="guestsDatas.document_number"
+							v-model="guestForm.document_number"
 							placeholder="Введите номер документа"
 							:prefix-icon="Key"
 							clearable
@@ -164,6 +164,13 @@ const filterTableData = computed(() =>
 							@click="submitGuestsForm(guestFormRef)"
 						>
 							Создать
+						</el-button>
+						<el-button
+							type="danger"
+							plain
+							@click="guestFormRef.resetFields()"
+						>
+							Очистить
 						</el-button>
 					</el-form-item>
 				</el-form>
@@ -177,6 +184,7 @@ const filterTableData = computed(() =>
 						prop="document_number"
 						label="Номер документа"
 					/>
+					<el-table-column prop="created_at" label="Дата создание" />
 					<el-table-column fixed="right" label="Операций">
 						<template #header>
 							<el-input

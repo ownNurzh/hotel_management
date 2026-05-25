@@ -64,3 +64,20 @@ contextBridge.exposeInMainWorld("hotel", {
 		return ipcRenderer.invoke("hotel:save", data);
 	},
 });
+
+contextBridge.exposeInMainWorld("guest", {
+	create: (first_name, second_name, document_number) => {
+		return ipcRenderer.invoke(
+			"guest:create",
+			first_name,
+			second_name,
+			document_number,
+		);
+	},
+	getAll: () => {
+		return ipcRenderer.invoke("guest:get");
+	},
+	deleteGuestById: (id) => {
+		return ipcRenderer.invoke("guest:delete", id);
+	},
+});

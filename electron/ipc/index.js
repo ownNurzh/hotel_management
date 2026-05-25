@@ -3,6 +3,7 @@ const sessiongHandlers = require("./session");
 const userHandlers = require("./user");
 const roomHandlers = require("./room");
 const hotelHandlers = require("./hotel");
+const guestHandlers = require("./guest");
 
 module.exports = () => {
 	authHandlers();
@@ -10,4 +11,5 @@ module.exports = () => {
 	userHandlers();
 	roomHandlers();
 	hotelHandlers();
+	guestHandlers();
 };

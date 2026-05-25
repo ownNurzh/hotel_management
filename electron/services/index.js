@@ -4,14 +4,17 @@ const AuthService = require("./auth.service");
 const SessionService = require("./session.service");
 const RoomService = require("./room.service");
 const HotelService = require("./hotel.service");
+const GuestService = require("./guest.service");
 
 const userService = new UserService(db);
 const sessionService = new SessionService();
 const roomService = new RoomService(db);
+const guestService = new GuestService(db);
 module.exports = {
 	userService: userService,
 	authService: new AuthService(userService, sessionService),
 	sessionService: sessionService,
 	roomService: roomService,
 	hotelService: new HotelService(),
+	guestService: guestService,
 };
