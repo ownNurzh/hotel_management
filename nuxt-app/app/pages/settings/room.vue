@@ -43,6 +43,22 @@ async function refreshRoomTypes() {
 }
 await refreshRoomTypes();
 
+async function deleteRoomType(id) {
+	const result = await window?.room?.deleteRoomTypeById(id);
+	if (result) {
+		ElMessage({
+			message: `Вы успешно удалили тип комнаты с id=${id}!`,
+			type: "success",
+		});
+		await refreshRoomTypes();
+	} else {
+		ElMessage({
+			message: `Что то пошло не так!`,
+			type: "warning",
+		});
+	}
+}
+
 const submitRoomTypeForm = (formEl) => {
 	if (!formEl) return;
 	formEl.validate(async (valid) => {
@@ -183,10 +199,14 @@ let RoomDatas = [
 					<el-table-column prop="price" label="Цена" />
 					<el-table-column prop="capacity" label="Вместимость" />
 					<el-table-column fixed="right" label="Операций">
-						<template #default>
-							<el-button type="danger" size="small"
-								>Удалить</el-button
+						<template #default="{ row }">
+							<el-button
+								type="danger"
+								size="small"
+								@click="deleteRoomType(row.id)"
 							>
+								Удалить
+							</el-button>
 						</template>
 					</el-table-column>
 				</el-table>

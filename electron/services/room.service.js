@@ -12,6 +12,9 @@ class Room {
 	getAllRoomTypes() {
 		return this.db.prepare("SELECT * FROM room_types").all();
 	}
+	deleteRoomTypeById(id) {
+		return this.db.prepare("DELETE FROM room_types WHERE id = ?").run(id);
+	}
 	//
 	createRoom(room_number, room_type_id) {
 		return this.db

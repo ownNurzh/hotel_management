@@ -11,4 +11,7 @@ module.exports = () => {
 	ipcMain.handle("roomTypes:get", (event, login, password) => {
 		return roomService.getAllRoomTypes();
 	});
+	ipcMain.handle("roomTypes:delete", (event, id) => {
+		return roomService.deleteRoomTypeById(id);
+	});
 };

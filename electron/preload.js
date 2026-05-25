@@ -34,4 +34,7 @@ contextBridge.exposeInMainWorld("room", {
 	createRoomType: (name, price, capacity) => {
 		return ipcRenderer.invoke("roomTypes:create", name, price, capacity);
 	},
+	deleteRoomTypeById: (id) => {
+		return ipcRenderer.invoke("roomTypes:delete", id);
+	},
 });
