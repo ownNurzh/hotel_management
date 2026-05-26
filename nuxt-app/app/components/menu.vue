@@ -59,10 +59,6 @@ const profileVisible = ref(false);
 				>
 			</el-menu-item-group>
 		</el-sub-menu>
-		<el-menu-item index="/reservation">
-			<el-icon><Calendar /></el-icon>
-			<span>Бронирование</span>
-		</el-menu-item>
 		<el-menu-item index="/guests">
 			<el-icon><Avatar /></el-icon>
 			<span>Гости</span>
