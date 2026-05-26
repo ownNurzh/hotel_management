@@ -184,7 +184,11 @@ const filterTableData = computed(() =>
 						prop="document_number"
 						label="Номер документа"
 					/>
-					<el-table-column prop="created_at" label="Дата создание" />
+					<el-table-column
+						prop="created_at"
+						label="Дата создание"
+						sortable
+					/>
 					<el-table-column fixed="right" label="Операций">
 						<template #header>
 							<el-input
