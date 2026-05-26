@@ -112,6 +112,69 @@ const filterTableData = computed(() =>
 		);
 	}),
 );
+const reservationDialogVisible = ref(false);
+const selectedGuestForReservation = ref(null);
+
+const reservationFormRef = ref();
+
+const reservationFormRules = {
+	guest_id: [
+		{
+			required: true,
+			message: "Введите айди гостя",
+			trigger: "blur",
+		},
+	],
+	room_id: [
+		{
+			required: true,
+			message: "Введите айди комнаты",
+			trigger: "blur",
+		},
+	],
+	check_in: [
+		{
+			required: true,
+			message: "Выберите дату заселение",
+			trigger: "blur",
+		},
+	],
+	check_out: [
+		{
+			required: true,
+			message: "Выберите дату ухода",
+			trigger: "blur",
+		},
+	],
+};
+const reservationDatas = reactive({
+	guest_id: selectedGuestForReservation,
+	room_id: "",
+	check_in: "",
+	check_out: "",
+});
+const submitReservationForm = (formEl) => {
+	if (!formEl) return;
+	formEl.validate(async (valid) => {
+		if (valid) {
+			try {
+				//await window?.hotel?.save(toRaw(hotelDatas.value));
+
+				ElMessage({
+					message: "Вы успешно создали бронь!",
+					type: "success",
+				});
+			} catch (e) {
+				ElMessage({
+					message: "Что то пошло не так. " + e,
+					type: "error",
+				});
+			}
+		} else {
+			console.log("error submit!");
+		}
+	});
+};
 </script>
 <template>
 	<el-row>
@@ -198,6 +261,17 @@ const filterTableData = computed(() =>
 						</template>
 						<template #default="{ row }">
 							<el-button
+								type="primary"
+								size="small"
+								plain
+								@click="
+									reservationDialogVisible = true;
+									selectedGuestForReservation = row.id;
+								"
+							>
+								Бронь
+							</el-button>
+							<el-button
 								type="danger"
 								size="small"
 								@click="deleteGuest(row.id)"
@@ -209,5 +283,64 @@ const filterTableData = computed(() =>
 				</el-table>
 			</el-card>
 		</el-col>
+		<el-dialog
+			align-center
+			v-model="reservationDialogVisible"
+			:title="
+				'Бронирование для гостя с id = ' + selectedGuestForReservation
+			"
+			width="30%"
+			center
+			@closed="() => (selectedGuestForReservation = null)"
+		>
+			<el-form
+				ref="reservationFormRef"
+				:model="reservationDatas"
+				:rules="reservationFormRules"
+				label-position="top"
+				size="large"
+				@submit.prevent="submitReservationForm(reservationFormRef)"
+			>
+				<el-form-item label="Айди гостя" prop="guest_id">
+					<el-input
+						v-model="reservationDatas.guest_id"
+						placeholder="Введите айди гостя"
+						:prefix-icon="InfoFilled"
+						clearable
+						disabled
+					/>
+				</el-form-item>
+
+				<el-form-item label="Айди комнаты" prop="room_id">
+					<el-input
+						v-model="reservationDatas.room_id"
+						placeholder="Введите айди комнаты"
+						:prefix-icon="InfoFilled"
+						clearable
+					/>
+				</el-form-item>
+				<el-form-item label="Дата заселение" prop="check_in">
+					<el-date-picker v-model="reservationDatas.check_in" />
+				</el-form-item>
+				<el-form-item label="Дата ухода" prop="check_out">
+					<el-date-picker v-model="reservationDatas.check_out" />
+				</el-form-item>
+				<el-form-item>
+					<el-button
+						type="primary"
+						@click="submitReservationForm(reservationFormRef)"
+					>
+						Сохранить
+					</el-button>
+					<el-button
+						type="danger"
+						plain
+						@click="reservationFormRef.resetFields()"
+					>
+						Очистить
+					</el-button>
+				</el-form-item>
+			</el-form>
+		</el-dialog>
 	</el-row>
 </template>
