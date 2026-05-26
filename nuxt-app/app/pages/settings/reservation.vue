@@ -1,4 +1,5 @@
 <script setup>
+const appConfig = useAppConfig();
 const reservationDatas = ref([
 	{
 		id: 1,
@@ -80,7 +81,20 @@ async function deleteReservation(id) {
 						label="Дата ухода"
 						sortable
 					/>
-					<el-table-column prop="status" label="Статус" />
+					<el-table-column prop="status" label="Статус">
+						<template #default="{ row }">
+							<el-tag
+								:type="
+									appConfig.reservationStatus[row.status]
+										.type || 'info'
+								"
+								>{{
+									appConfig.reservationStatus[row.status]
+										.name || "None"
+								}}</el-tag
+							>
+						</template>
+					</el-table-column>
 					<el-table-column
 						prop="created_at"
 						label="Дата создание"
