@@ -1,20 +1,21 @@
 <script setup>
-const roomStats = [
-	{ name: "Свободна", type: "success", value: 34 },
-	{ name: "Занята", type: "danger", value: 86 },
-	{ name: "Ремонт", type: "warning", value: 12 },
-	{ name: "Неактивна", type: "info", value: 8 },
-];
+const appConfig = useAppConfig();
 
-const reservationStats = [
-	{ name: "Подтверждено", type: "primary", value: 78 },
-	{ name: "Заселён", type: "success", value: 44 },
-	{ name: "Отменено", type: "danger", value: 310 },
-	{ name: "Завершено", type: "info", value: 3778 },
-];
+const roomStats = ref({});
 
-const totalRooms = roomStats.reduce((s, i) => s + i.value, 0);
-const totalReservations = reservationStats.reduce((s, i) => s + i.value, 0);
+const reservationStats = ref({});
+
+async function refreshDatas() {
+	roomStats.value = await window?.room?.getStatusCounts();
+	reservationStats.value = await window?.reservation?.getStatusCounts();
+}
+await refreshDatas();
+const totalRooms = computed(() =>
+	roomStats.value.reduce((s, i) => s + i.count, 0),
+);
+const totalReservations = computed(() =>
+	reservationStats.value.reduce((s, i) => s + i.count, 0),
+);
 
 const tagColorMap = {
 	success: "#67C23A",
@@ -46,28 +47,35 @@ const tagColorMap = {
 	</el-row>
 
 	<el-row :gutter="12" style="margin-bottom: 20px">
-		<el-col :span="6" v-for="s in roomStats" :key="s.name">
+		<el-col :span="6" v-for="obj in roomStats" :key="obj.status">
 			<el-card shadow="hover" style="height: 100%">
 				<el-row justify="space-between" align="top">
 					<el-col :span="24">
 						<el-row style="margin-bottom: 10px">
-							<el-tag :type="s.type" size="small" effect="light">
-								{{ s.name }}
+							<el-tag
+								:type="appConfig.roomStatus[obj.status].type"
+								size="small"
+								effect="light"
+							>
+								{{ appConfig.roomStatus[obj.status].name }}
 							</el-tag>
 						</el-row>
-						<el-statistic :value="s.value" />
+						<el-statistic :value="obj.count" />
 						<el-row style="margin-top: 8px">
 							<el-text type="info" size="small">
-								{{ Math.round((s.value / totalRooms) * 100) }}%
-								от общего
+								{{
+									Math.round((obj.count / totalRooms) * 100)
+								}}% от общего
 							</el-text>
 						</el-row>
 					</el-col>
 				</el-row>
 				<el-row style="margin-top: 12px">
 					<el-progress
-						:percentage="Math.round((s.value / totalRooms) * 100)"
-						:color="tagColorMap[s.type]"
+						:percentage="Math.round((obj.count / totalRooms) * 100)"
+						:color="
+							tagColorMap[appConfig.roomStatus[obj.status].type]
+						"
 						:show-text="false"
 						style="width: 100%"
 					/>
@@ -89,21 +97,29 @@ const tagColorMap = {
 	</el-row>
 
 	<el-row :gutter="12">
-		<el-col :span="6" v-for="s in reservationStats" :key="s.name">
+		<el-col :span="6" v-for="obj in reservationStats" :key="obj.status">
 			<el-card shadow="hover" style="height: 100%">
 				<el-row justify="space-between" align="top">
 					<el-col :span="24">
 						<el-row style="margin-bottom: 10px">
-							<el-tag :type="s.type" size="small" effect="light">
-								{{ s.name }}
+							<el-tag
+								:type="
+									appConfig.reservationStatus[obj.status].type
+								"
+								size="small"
+								effect="light"
+							>
+								{{
+									appConfig.reservationStatus[obj.status].name
+								}}
 							</el-tag>
 						</el-row>
-						<el-statistic :value="s.value" />
+						<el-statistic :value="obj.count" />
 						<el-row style="margin-top: 8px">
 							<el-text type="info" size="small">
 								{{
 									Math.round(
-										(s.value / totalReservations) * 100,
+										(obj.count / totalReservations) * 100,
 									)
 								}}% от общего
 							</el-text>
@@ -113,9 +129,13 @@ const tagColorMap = {
 				<el-row style="margin-top: 12px">
 					<el-progress
 						:percentage="
-							Math.round((s.value / totalReservations) * 100)
+							Math.round((obj.count / totalReservations) * 100)
 						"
-						:color="tagColorMap[s.type]"
+						:color="
+							tagColorMap[
+								appConfig.reservationStatus[obj.status].type
+							]
+						"
 						:show-text="false"
 						style="width: 100%"
 					/>

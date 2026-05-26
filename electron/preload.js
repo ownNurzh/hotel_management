@@ -48,6 +48,9 @@ contextBridge.exposeInMainWorld("room", {
 	deleteRoomById: (id) => {
 		return ipcRenderer.invoke("room:delete", id);
 	},
+	getStatusCounts: () => {
+		return ipcRenderer.invoke("room:getStatusCounts");
+	},
 });
 
 contextBridge.exposeInMainWorld("hotel", {
@@ -97,5 +100,8 @@ contextBridge.exposeInMainWorld("reservation", {
 	},
 	deleteReservationById: (id) => {
 		return ipcRenderer.invoke("reservation:delete", id);
+	},
+	getStatusCounts: () => {
+		return ipcRenderer.invoke("reservation:getStatusCounts");
 	},
 });

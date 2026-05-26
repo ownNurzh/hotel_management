@@ -24,4 +24,8 @@ module.exports = () => {
 		const result = reservationService.deleteReservationById(id);
 		return result;
 	});
+	ipcMain.handle("reservation:getStatusCounts", (event) => {
+		const result = reservationService.getStatusCounts();
+		return result;
+	});
 };

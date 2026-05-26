@@ -36,5 +36,17 @@ class Room {
 	deleteRoomById(id) {
 		return this.db.prepare("DELETE FROM rooms WHERE id = ?").run(id);
 	}
+	getStatusCounts() {
+		const sql = `
+        WITH statuses(s) AS (
+            VALUES (0), (1), (2), (3)
+        )
+        SELECT s AS status, COUNT(r.id) AS count
+        FROM statuses
+        LEFT JOIN rooms r ON r.status = s
+        GROUP BY s
+    `;
+		return this.db.prepare(sql).all();
+	}
 }
 module.exports = Room;

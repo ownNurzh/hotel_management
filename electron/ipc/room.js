@@ -25,4 +25,8 @@ module.exports = () => {
 	ipcMain.handle("room:delete", (event, id) => {
 		return roomService.deleteRoomById(id);
 	});
+	ipcMain.handle("room:getStatusCounts", (event) => {
+		const result = roomService.getStatusCounts();
+		return result;
+	});
 };
