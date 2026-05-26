@@ -132,17 +132,10 @@ const reservationFormRules = {
 			trigger: "blur",
 		},
 	],
-	check_in: [
+	date: [
 		{
 			required: true,
-			message: "Выберите дату заселение",
-			trigger: "blur",
-		},
-	],
-	check_out: [
-		{
-			required: true,
-			message: "Выберите дату ухода",
+			message: "Выберите дату",
 			trigger: "blur",
 		},
 	],
@@ -150,15 +143,19 @@ const reservationFormRules = {
 const reservationDatas = reactive({
 	guest_id: selectedGuestForReservation,
 	room_id: "",
-	check_in: "",
-	check_out: "",
+	date: [],
 });
 const submitReservationForm = (formEl) => {
 	if (!formEl) return;
 	formEl.validate(async (valid) => {
 		if (valid) {
 			try {
-				//await window?.hotel?.save(toRaw(hotelDatas.value));
+				await window?.reservation?.create(
+					reservationDatas.guest_id,
+					reservationDatas.room_id,
+					reservationDatas.date[0],
+					reservationDatas.date[1],
+				);
 
 				ElMessage({
 					message: "Вы успешно создали бронь!",
@@ -166,9 +163,10 @@ const submitReservationForm = (formEl) => {
 				});
 			} catch (e) {
 				ElMessage({
-					message: "Что то пошло не так. " + e,
+					message: "Что то пошло не так. ",
 					type: "error",
 				});
+				console.log(e);
 			}
 		} else {
 			console.log("error submit!");
@@ -319,11 +317,16 @@ const submitReservationForm = (formEl) => {
 						clearable
 					/>
 				</el-form-item>
-				<el-form-item label="Дата заселение" prop="check_in">
-					<el-date-picker v-model="reservationDatas.check_in" />
-				</el-form-item>
-				<el-form-item label="Дата ухода" prop="check_out">
-					<el-date-picker v-model="reservationDatas.check_out" />
+				<el-form-item label="Дата" prop="date">
+					<el-date-picker
+						v-model="reservationDatas.date"
+						type="daterange"
+						range-separator="До"
+						start-placeholder="Дата заселение"
+						end-placeholder="Дата ухода"
+						format="YYYY-MM-DD"
+						value-format="YYYY-MM-DD"
+					/>
 				</el-form-item>
 				<el-form-item>
 					<el-button
