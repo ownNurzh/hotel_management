@@ -34,7 +34,7 @@ const createWindow = () => {
 		console.log("development");
 	}
 };
-
+app.disableHardwareAcceleration();
 app.whenReady().then(() => {
 	createWindow();
 	initApp();

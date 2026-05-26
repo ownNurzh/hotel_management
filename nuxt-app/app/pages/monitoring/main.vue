@@ -1,21 +1,21 @@
 <script setup>
 const appConfig = useAppConfig();
 
-const roomStats = ref({});
+const roomStats = ref([]);
 
-const reservationStats = ref({});
-
+const reservationStats = ref([]);
+const totalRooms = ref(0);
+const totalReservations = ref(0);
 async function refreshDatas() {
 	roomStats.value = await window?.room?.getStatusCounts();
 	reservationStats.value = await window?.reservation?.getStatusCounts();
+	totalRooms.value = roomStats.value.reduce((s, i) => s + i.count, 0);
+	totalReservations.value = reservationStats.value.reduce(
+		(s, i) => s + i.count,
+		0,
+	);
 }
 await refreshDatas();
-const totalRooms = computed(() =>
-	roomStats.value.reduce((s, i) => s + i.count, 0),
-);
-const totalReservations = computed(() =>
-	reservationStats.value.reduce((s, i) => s + i.count, 0),
-);
 
 const tagColorMap = {
 	success: "#67C23A",
