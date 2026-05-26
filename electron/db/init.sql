@@ -72,8 +72,6 @@ CREATE TABLE IF NOT EXISTS reservations (
 
     status INTEGER NOT NULL DEFAULT 0,
 
-    total_price INTEGER,
-
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (guest_id) REFERENCES guests(id),
