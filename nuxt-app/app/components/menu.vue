@@ -67,10 +67,6 @@ const profileVisible = ref(false);
 			<el-icon><Avatar /></el-icon>
 			<span>Гости</span>
 		</el-menu-item>
-		<el-menu-item index="/rooms">
-			<el-icon><Menu /></el-icon>
-			<span>Комнаты</span>
-		</el-menu-item>
 		<el-sub-menu index="/settings">
 			<template #title>
 				<el-icon><Setting /></el-icon>
