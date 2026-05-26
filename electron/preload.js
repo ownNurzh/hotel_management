@@ -81,3 +81,21 @@ contextBridge.exposeInMainWorld("guest", {
 		return ipcRenderer.invoke("guest:delete", id);
 	},
 });
+
+contextBridge.exposeInMainWorld("reservation", {
+	create: (guest_id, room_id, check_in, check_out) => {
+		return ipcRenderer.invoke(
+			"reservation:create",
+			guest_id,
+			room_id,
+			check_in,
+			check_out,
+		);
+	},
+	getAll: () => {
+		return ipcRenderer.invoke("reservation:get");
+	},
+	deleteReservationById: (id) => {
+		return ipcRenderer.invoke("reservation:delete", id);
+	},
+});
