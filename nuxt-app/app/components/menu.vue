@@ -54,9 +54,6 @@ const profileVisible = ref(false);
 			</template>
 			<el-menu-item-group title="Основные">
 				<el-menu-item index="/monitoring/main">Общий</el-menu-item>
-				<el-menu-item index="/monitoring/payments"
-					>Платежи</el-menu-item
-				>
 			</el-menu-item-group>
 		</el-sub-menu>
 		<el-menu-item index="/guests">

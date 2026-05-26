@@ -1,1 +1,0 @@
-<template>Monitoring Payments</template>
