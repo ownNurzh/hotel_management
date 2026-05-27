@@ -10,7 +10,7 @@ const openFullScreen = () => {
 	});
 	setTimeout(() => {
 		loading.close();
-	}, 2500);
+	}, 500);
 };
 
 onMounted(() => {
