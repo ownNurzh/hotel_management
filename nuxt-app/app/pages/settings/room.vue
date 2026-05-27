@@ -335,11 +335,11 @@ const submitRoomForm = (formEl) => {
 						<template #default="{ row }">
 							<el-tag
 								:type="
-									appConfig.roomStatus[row.status].type ||
+									appConfig.roomStatus[row.status]?.type ||
 									'info'
 								"
 								>{{
-									appConfig.roomStatus[row.status].name ||
+									appConfig.roomStatus[row.status]?.name ||
 									"None"
 								}}</el-tag
 							>

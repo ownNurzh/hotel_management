@@ -289,7 +289,6 @@ const submitUpdateForm = (formEl) => {
 			:title="`Изменить данные для id = ` + updateForm?.id"
 			width="25%"
 			center
-			@closed="() => (selectedUserForUpdate = null)"
 		>
 			<el-form
 				ref="updateFormRef"

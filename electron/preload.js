@@ -137,6 +137,16 @@ contextBridge.exposeInMainWorld("reservation", {
 			check_out,
 		);
 	},
+	update: (id, room_id, check_in, check_out, status) => {
+		return ipcRenderer.invoke(
+			"reservation:update",
+			id,
+			room_id,
+			check_in,
+			check_out,
+			status,
+		);
+	},
 	getAll: () => {
 		return ipcRenderer.invoke("reservation:get");
 	},
