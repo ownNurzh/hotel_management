@@ -8,12 +8,34 @@
 	"main": "electron/main.js",
 	"scripts": {
 		"start": "electron .",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "electron-builder"
 	},
 	"devDependencies": {
-		"electron": "42.0.1"
+		"electron": "42.0.1",
+		"electron-builder": "^26.8.1"
 	},
 	"dependencies": {
 		"electron-store": "8.2.0"
+	},
+	"build": {
+		"appId": "com.hotel.management",
+		"productName": "Hotel Management",
+		"directories": {
+			"output": "dist"
+		},
+		"files": [
+			"electron/**/*",
+			"nuxt-app/.output/public/**/*",
+			"package.json"
+		],
+		"asar": true,
+		"win": {
+			"target": "portable"
+		},
+		"nsis": {
+			"oneClick": false,
+			"allowToChangeInstallationDirectory": true
+		}
 	}
 }
