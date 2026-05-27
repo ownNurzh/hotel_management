@@ -60,7 +60,10 @@ const profileVisible = ref(false);
 			<el-icon><Avatar /></el-icon>
 			<span>Гости</span>
 		</el-menu-item>
-		<el-sub-menu index="/settings">
+		<el-sub-menu
+			index="/settings"
+			:disabled="userDatas.role_name != 'admin'"
+		>
 			<template #title>
 				<el-icon><Setting /></el-icon>
 				<span>Настройки</span>
