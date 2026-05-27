@@ -223,6 +223,12 @@ const submitUpdateForm = (formEl) => {
 						value-format="YYYY-MM-DD"
 					/>
 				</el-form-item>
+				<el-tag
+					v-for="(value, key) in appConfig.reservationStatus"
+					:key="key"
+					:type="value.type"
+					>{{ key }} : {{ value.name }}</el-tag
+				>
 				<el-form-item label="Статус" prop="status">
 					<el-input-number
 						v-model="updateForm.status"
