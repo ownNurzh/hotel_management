@@ -28,12 +28,11 @@ module.exports = () => {
 	});
 	ipcMain.handle(
 		"room:update",
-		(event, id, room_id, check_in, check_out, status) => {
-			const result = roomService.updateRoomType(
+		(event, id, room_number, room_type_id, status) => {
+			const result = roomService.updateRoom(
 				id,
-				room_id,
-				check_in,
-				check_out,
+				room_number,
+				room_type_id,
 				status,
 			);
 			return result != null;
