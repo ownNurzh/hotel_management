@@ -331,6 +331,8 @@ const submitUpdateForm = (formEl) => {
 						clearable
 					/>
 				</el-form-item>
+				<el-tag size="small">Admin: 1</el-tag><br />
+				<el-tag size="small" type="warning">Reception: 2</el-tag>
 				<el-form-item label="Роль" prop="role_id">
 					<el-input-number
 						v-model="updateForm.role_id"

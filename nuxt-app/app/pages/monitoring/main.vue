@@ -24,6 +24,7 @@ const tagColorMap = {
 	info: "#909399",
 	primary: "#409EFF",
 };
+const hotelDatasInDb = await window?.hotel?.get();
 </script>
 
 <template>
@@ -141,6 +142,31 @@ const tagColorMap = {
 					/>
 				</el-row>
 			</el-card>
+		</el-col>
+	</el-row>
+	<el-row style="margin-bottom: 6px" align="middle">
+		<el-col :span="24">
+			<el-space>
+				<el-text type="info" size="small" style="font-weight: 500">
+					Данные отеля
+				</el-text>
+			</el-space>
+		</el-col>
+	</el-row>
+
+	<el-row>
+		<el-col :span="24">
+			<el-descriptions border column="2">
+				<el-descriptions-item
+					v-if="hotelDatasInDb != null"
+					v-for="(key, value) in hotelDatasInDb"
+					:label="value"
+					:key="key"
+					align="center"
+				>
+					{{ key }}
+				</el-descriptions-item>
+			</el-descriptions>
 		</el-col>
 	</el-row>
 </template>
