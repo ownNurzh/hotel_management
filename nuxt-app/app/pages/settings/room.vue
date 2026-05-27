@@ -199,6 +199,53 @@ const submitRoomForm = (formEl) => {
 		}
 	});
 };
+const updateRoomTypesDialogVisible = ref(false);
+const updateRoomTypesFormRef = ref();
+const updateRoomTypesForm = reactive({
+	name: "",
+	price: 0,
+	capacity: 0,
+});
+function openRoomTypesUpdateDialog(row) {
+	const raw = toRaw(row);
+	Object.assign(updateRoomTypesForm, raw);
+	updateRoomTypesDialogVisible.value = true;
+}
+const submitRoomTypesUpdateForm = (formEl) => {
+	if (!formEl) return;
+	formEl.validate(async (valid) => {
+		if (valid) {
+			try {
+				const result = await window?.room?.updateRoomType(
+					updateRoomTypesForm.id,
+					updateRoomTypesForm.name,
+					updateRoomTypesForm.price,
+					updateRoomTypesForm.capacity,
+				);
+				if (result) {
+					ElMessage({
+						message: "Вы успешно обновили данные типа комнаты!",
+						type: "success",
+					});
+					await refreshRoomTypes();
+				} else {
+					ElMessage({
+						message: "Что то пошло не так.",
+						type: "warning",
+					});
+				}
+				console.log(result);
+			} catch (e) {
+				ElMessage({
+					message: "Что то пошло не так.",
+					type: "error",
+				});
+			}
+		} else {
+			console.log("error submit!");
+		}
+	});
+};
 </script>
 <template>
 	<el-row>
@@ -262,7 +309,11 @@ const submitRoomForm = (formEl) => {
 					<el-table-column prop="capacity" label="Вместимость" />
 					<el-table-column fixed="right" label="Операций">
 						<template #default="{ row }">
-							<el-button type="warning" size="small" @click="">
+							<el-button
+								type="warning"
+								size="small"
+								@click="openRoomTypesUpdateDialog(row)"
+							>
 								Изменить
 							</el-button>
 							<el-button
@@ -368,6 +419,61 @@ const submitRoomForm = (formEl) => {
 				</el-table>
 			</el-card>
 		</el-col>
+		<el-dialog
+			align-center
+			v-model="updateRoomTypesDialogVisible"
+			:title="`Изменить данные для id = ` + updateRoomTypesForm?.id"
+			width="25%"
+			center
+		>
+			<el-form
+				ref="updateRoomTypesFormRef"
+				:model="updateRoomTypesForm"
+				:rules="RoomTypesFormRules"
+				label-position="top"
+				size="large"
+				@submit.prevent="
+					submitRoomTypesUpdateForm(updateRoomTypesFormRef)
+				"
+			>
+				<el-form-item label="Название" prop="name">
+					<el-input
+						v-model="updateRoomTypesForm.name"
+						placeholder="Введите название"
+						:prefix-icon="InfoFilled"
+						clearable
+					/>
+				</el-form-item>
+
+				<el-form-item label="Цена" prop="price">
+					<el-input-number v-model="updateRoomTypesForm.price">
+						<template #suffix>
+							<span>KZT</span>
+						</template>
+					</el-input-number>
+				</el-form-item>
+				<el-form-item label="Вместимость" prop="capacity">
+					<el-input-number v-model="updateRoomTypesForm.capacity">
+					</el-input-number>
+				</el-form-item>
+			</el-form>
+			<template #footer>
+				<div class="dialog-footer">
+					<el-button @click="updateRoomTypesDialogVisible = false"
+						>Отмена</el-button
+					>
+					<el-button
+						type="primary"
+						@click="
+							updateRoomTypesDialogVisible = false;
+							submitRoomTypesUpdateForm(updateRoomTypesFormRef);
+						"
+					>
+						Сохранить
+					</el-button>
+				</div>
+			</template>
+		</el-dialog>
 	</el-row>
 </template>
 
