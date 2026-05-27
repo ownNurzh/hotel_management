@@ -38,7 +38,19 @@ const reservationDatas = ref([
 		created_at: "",
 	},
 ]);
+const search = ref("");
+const filterTableData = computed(() =>
+	reservationDatas.value.filter((data) => {
+		if (!search.value) return true;
 
+		const query = String(search.value).toLowerCase();
+
+		return (
+			String(data.guest_id).toLowerCase().includes(query) ||
+			String(data.room_Id).toLowerCase().includes(query)
+		);
+	}),
+);
 async function refreshReservations() {
 	reservationDatas.value = await window?.reservation?.getAll();
 }
@@ -66,7 +78,7 @@ async function deleteReservation(id) {
 				<template #header>
 					<h1 style="font-weight: bold; font-size: 20px">Брони</h1>
 				</template>
-				<el-table :data="reservationDatas" stripe height="200px">
+				<el-table :data="filterTableData" stripe height="200px">
 					<el-table-column type="selection" width="55" />
 					<el-table-column prop="id" label="#" />
 					<el-table-column prop="guest_id" label="Айди гостя" />
@@ -101,7 +113,16 @@ async function deleteReservation(id) {
 						sortable
 					/>
 					<el-table-column fixed="right" label="Операций">
+						<template #header>
+							<el-input
+								v-model="search"
+								placeholder="Введите для поиска"
+							/>
+						</template>
 						<template #default="{ row }">
+							<el-button type="warning" size="small" @click="">
+								Изменить
+							</el-button>
 							<el-button
 								type="danger"
 								size="small"

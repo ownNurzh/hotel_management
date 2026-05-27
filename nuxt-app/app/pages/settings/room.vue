@@ -262,6 +262,9 @@ const submitRoomForm = (formEl) => {
 					<el-table-column prop="capacity" label="Вместимость" />
 					<el-table-column fixed="right" label="Операций">
 						<template #default="{ row }">
+							<el-button type="warning" size="small" @click="">
+								Изменить
+							</el-button>
 							<el-button
 								type="danger"
 								size="small"
@@ -350,6 +353,9 @@ const submitRoomForm = (formEl) => {
 					/>
 					<el-table-column fixed="right" label="Операций">
 						<template #default="{ row }">
+							<el-button type="warning" size="small" @click="">
+								Изменить
+							</el-button>
 							<el-button
 								type="danger"
 								size="small"

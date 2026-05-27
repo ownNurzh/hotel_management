@@ -214,6 +214,9 @@ const submitUsersForm = (formEl) => {
 					</el-table-column>
 					<el-table-column fixed="right" label="Операций">
 						<template #default="{ row }">
+							<el-button type="warning" size="small" @click="">
+								Изменить
+							</el-button>
 							<el-button
 								type="danger"
 								size="small"
