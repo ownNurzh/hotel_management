@@ -30,7 +30,7 @@ const createWindow = () => {
 		//win.loadFile("")
 		win.loadFile(
 			path.join(
-				process.resourcesPath,
+				app.getAppPath(),
 				"nuxt-app",
 				".output",
 				"public",
