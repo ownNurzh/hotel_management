@@ -69,6 +69,7 @@ const profileVisible = ref(false);
 				<el-menu-item index="/settings/room">Комната</el-menu-item>
 				<el-menu-item index="/settings/hotel">Отель</el-menu-item>
 				<el-menu-item index="/settings/reservation">Брони</el-menu-item>
+				<el-menu-item index="/settings/user">Пользователи</el-menu-item>
 			</el-menu-item-group>
 		</el-sub-menu>
 		<div style="flex: 1" />

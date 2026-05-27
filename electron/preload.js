@@ -25,6 +25,19 @@ contextBridge.exposeInMainWorld("user", {
 	getAll: () => {
 		return ipcRenderer.invoke("user:getAll");
 	},
+	deleteUserById: (id) => {
+		return ipcRenderer.invoke("user:delete", id);
+	},
+	create: (first_name, second_name, login, password, roleId) => {
+		return ipcRenderer.invoke(
+			"user:create",
+			first_name,
+			second_name,
+			login,
+			password,
+			roleId,
+		);
+	},
 });
 
 contextBridge.exposeInMainWorld("room", {

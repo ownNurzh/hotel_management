@@ -12,4 +12,21 @@ module.exports = () => {
 		const result = userService.getAll();
 		return result;
 	});
+	ipcMain.handle(
+		"user:create",
+		(event, first_name, second_name, login, password, roleId) => {
+			const result = userService.create(
+				first_name,
+				second_name,
+				login,
+				password,
+				roleId,
+			);
+			return result;
+		},
+	);
+	ipcMain.handle("user:delete", (event, id) => {
+		const result = userService.deleteUserById(id);
+		return result;
+	});
 };
