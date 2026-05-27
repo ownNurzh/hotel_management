@@ -147,11 +147,11 @@ const profileVisible = ref(false);
 			<el-descriptions border :column="1" style="margin-top: 50px">
 				<el-descriptions-item
 					v-for="(key, value) in userDatas"
-					:label="key"
+					:label="value"
 					:key="key"
 					align="center"
 				>
-					{{ value }}
+					{{ key }}
 				</el-descriptions-item>
 			</el-descriptions>
 			<template #footer>
