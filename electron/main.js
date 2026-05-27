@@ -3,6 +3,9 @@ const { app, BrowserWindow, Menu, dialog } = require("electron/main");
 const path = require("node:path");
 const fs = require("node:fs");
 const config = require("./config");
+if (!fs.existsSync(config.userDataPath)) {
+	fs.mkdirSync(config.userDataPath, { recursive: true });
+}
 const initMenu = require("./menu");
 
 const allIpcHandlers = require("./ipc");
@@ -10,9 +13,6 @@ const allIpcHandlers = require("./ipc");
 const initSeedDatas = require("./db/seed");
 
 function initApp() {
-	if (!fs.existsSync(config.userDataPath)) {
-		fs.mkdirSync(config.userDataPath, { recursive: true });
-	}
 	initSeedDatas();
 	allIpcHandlers();
 }
