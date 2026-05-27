@@ -20,6 +20,16 @@ class User {
 			)
 			.run(first_name, second_name, login, password, roleId);
 	}
+	update(id, first_name, second_name, login, password, roleId) {
+		const sql = `
+		UPDATE users
+		SET first_name = ?, second_name = ?, login = ?, password = ?,role_id = ?
+		WHERE id = ?
+	`;
+		return this.db
+			.prepare(sql)
+			.run(first_name, second_name, login, password, roleId, id);
+	}
 	login(login, password) {
 		return this.db
 			.prepare("SELECT * FROM users WHERE login = ? AND password = ?")

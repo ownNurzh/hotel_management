@@ -117,6 +117,56 @@ const submitUsersForm = (formEl) => {
 		}
 	});
 };
+const updateDialogVisible = ref(false);
+const updateFormRef = ref();
+const updateForm = reactive({
+	first_name: "",
+	second_name: "",
+	login: "",
+	password: "",
+	role_id: 0,
+});
+function openUpdateDialog(row) {
+	Object.assign(updateForm, toRaw(row));
+	updateDialogVisible.value = true;
+}
+const submitUpdateForm = (formEl) => {
+	if (!formEl) return;
+	formEl.validate(async (valid) => {
+		if (valid) {
+			try {
+				const result = await window?.user?.update(
+					updateForm.id,
+					updateForm.first_name,
+					updateForm.second_name,
+					updateForm.login,
+					updateForm.password,
+					updateForm.role_id,
+				);
+				if (result) {
+					ElMessage({
+						message: "Вы успешно обновили данные пользователя!",
+						type: "success",
+					});
+					await refreshUsers();
+				} else {
+					ElMessage({
+						message: "Что то пошло не так.",
+						type: "warning",
+					});
+				}
+				console.log(result);
+			} catch (e) {
+				ElMessage({
+					message: "Что то пошло не так.",
+					type: "error",
+				});
+			}
+		} else {
+			console.log("error submit!");
+		}
+	});
+};
 </script>
 <template>
 	<el-row>
@@ -214,7 +264,11 @@ const submitUsersForm = (formEl) => {
 					</el-table-column>
 					<el-table-column fixed="right" label="Операций">
 						<template #default="{ row }">
-							<el-button type="warning" size="small" @click="">
+							<el-button
+								type="warning"
+								size="small"
+								@click="openUpdateDialog(row)"
+							>
 								Изменить
 							</el-button>
 							<el-button
@@ -229,6 +283,78 @@ const submitUsersForm = (formEl) => {
 				</el-table>
 			</el-card>
 		</el-col>
+		<el-dialog
+			align-center
+			v-model="updateDialogVisible"
+			:title="`Изменить данные для id = ` + updateForm?.id"
+			width="25%"
+			center
+			@closed="() => (selectedUserForUpdate = null)"
+		>
+			<el-form
+				ref="updateFormRef"
+				:model="updateForm"
+				:rules="usersFormRules"
+				label-position="top"
+				size="large"
+				@submit.prevent="submitUpdateForm(updateFormRef)"
+			>
+				<el-form-item label="Имя" prop="first_name">
+					<el-input
+						v-model="updateForm.first_name"
+						placeholder="Введите Имя"
+						:prefix-icon="InfoFilled"
+						clearable
+					/>
+				</el-form-item>
+
+				<el-form-item label="Фамилия" prop="second_name">
+					<el-input
+						v-model="updateForm.second_name"
+						placeholder="Введите Фамилию"
+						:prefix-icon="InfoFilled"
+						clearable
+					/>
+				</el-form-item>
+				<el-form-item label="Логин" prop="login">
+					<el-input
+						v-model="updateForm.login"
+						placeholder="Введите логин"
+						:prefix-icon="Avatar"
+						clearable
+					/>
+				</el-form-item>
+				<el-form-item label="Пароль" prop="password">
+					<el-input
+						v-model="updateForm.password"
+						placeholder="Введите пароль"
+						:prefix-icon="Lock"
+						clearable
+					/>
+				</el-form-item>
+				<el-form-item label="Роль" prop="role_id">
+					<el-input-number
+						v-model="updateForm.role_id"
+					></el-input-number>
+				</el-form-item>
+			</el-form>
+			<template #footer>
+				<div class="dialog-footer">
+					<el-button @click="updateDialogVisible = false"
+						>Отмена</el-button
+					>
+					<el-button
+						type="primary"
+						@click="
+							updateDialogVisible = false;
+							submitUpdateForm(updateFormRef);
+						"
+					>
+						Сохранить
+					</el-button>
+				</div>
+			</template>
+		</el-dialog>
 	</el-row>
 </template>
 

@@ -38,6 +38,17 @@ contextBridge.exposeInMainWorld("user", {
 			roleId,
 		);
 	},
+	update: (id, first_name, second_name, login, password, roleId) => {
+		return ipcRenderer.invoke(
+			"user:update",
+			id,
+			first_name,
+			second_name,
+			login,
+			password,
+			roleId,
+		);
+	},
 });
 
 contextBridge.exposeInMainWorld("room", {
