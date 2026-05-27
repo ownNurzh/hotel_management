@@ -54,7 +54,7 @@ const submitHotelForm = (formEl) => {
 				});
 			} catch (e) {
 				ElMessage({
-					message: "Что то пошло не так. " + e,
+					message: "Что то пошло не так.",
 					type: "error",
 				});
 			}

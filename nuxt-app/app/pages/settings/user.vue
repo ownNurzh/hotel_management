@@ -101,14 +101,15 @@ const submitUsersForm = (formEl) => {
 					await refreshUsers();
 				} else {
 					ElMessage({
-						message: "Что то пошло не так.",
+						message:
+							"Что то пошло не так. Проверьте данные еще раз.",
 						type: "warning",
 					});
 				}
 				console.log(result);
 			} catch (e) {
 				ElMessage({
-					message: "Что то пошло не так.",
+					message: "Что то пошло не так. Проверьте данные еще раз.",
 					type: "error",
 				});
 			}
@@ -151,14 +152,15 @@ const submitUpdateForm = (formEl) => {
 					await refreshUsers();
 				} else {
 					ElMessage({
-						message: "Что то пошло не так.",
+						message:
+							"Что то пошло не так.Проверьте данные еще раз.",
 						type: "warning",
 					});
 				}
 				console.log(result);
 			} catch (e) {
 				ElMessage({
-					message: "Что то пошло не так.",
+					message: "Что то пошло не так.Проверьте данные еще раз.",
 					type: "error",
 				});
 			}
