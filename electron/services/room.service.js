@@ -9,6 +9,14 @@ class Room {
 			)
 			.run(name, price, capacity);
 	}
+	updateRoomType(id, name, price, capacity) {
+		const sql = `
+		UPDATE room_types
+		SET name = ?, price = ?, capacity = ?
+		WHERE id = ?
+	`;
+		return this.db.prepare(sql).run(name, price, capacity, id);
+	}
 	getAllRoomTypes() {
 		return this.db.prepare("SELECT * FROM room_types").all();
 	}
@@ -22,6 +30,14 @@ class Room {
 				"INSERT INTO rooms (room_number,room_type_id) VALUES (?, ?)",
 			)
 			.run(room_number, room_type_id);
+	}
+	updateRoom(id, room_number, room_type_id, status) {
+		const sql = `
+		UPDATE rooms
+		SET room_number = ?, room_type_id = ?, status = ?
+		WHERE id = ?
+	`;
+		return this.db.prepare(sql).run(room_number, room_type_id, status, id);
 	}
 	getAllRooms() {
 		const sql = `

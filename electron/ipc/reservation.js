@@ -15,6 +15,19 @@ module.exports = () => {
 			return result;
 		},
 	);
+	ipcMain.handle(
+		"reservation:update",
+		(event, id, room_id, check_in, check_out, status) => {
+			const result = reservationService.update(
+				id,
+				room_id,
+				check_in,
+				check_out,
+				status,
+			);
+			return result != null;
+		},
+	);
 
 	ipcMain.handle("reservation:get", (event) => {
 		const result = reservationService.getAll();

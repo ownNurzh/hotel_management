@@ -12,6 +12,16 @@ class Reservation {
 			)
 			.run(guest_id, room_id, check_in, check_out);
 	}
+	update(id, room_id, check_in, check_out, status) {
+		const sql = `
+		UPDATE reservations
+		SET room_id = ?, check_in = ?, check_out = ?, status = ?
+		WHERE id = ?
+	`;
+		return this.db
+			.prepare(sql)
+			.run(room_id, check_in, check_out, status, id);
+	}
 	deleteReservationById(id) {
 		return this.db.prepare("DELETE FROM reservations WHERE id = ?").run(id);
 	}

@@ -8,6 +8,10 @@ module.exports = () => {
 		const result = roomService.createRoomType(name, price, capacity);
 		return result != null;
 	});
+	ipcMain.handle("roomTypes:update", (event, id, name, price, capacity) => {
+		const result = roomService.updateRoomType(id, name, price, capacity);
+		return result != null;
+	});
 
 	ipcMain.handle("roomTypes:get", (event, login, password) => {
 		return roomService.getAllRoomTypes();
@@ -22,6 +26,19 @@ module.exports = () => {
 	ipcMain.handle("room:create", (event, room_number, room_type_id) => {
 		return roomService.createRoom(room_number, room_type_id);
 	});
+	ipcMain.handle(
+		"room:update",
+		(event, id, room_id, check_in, check_out, status) => {
+			const result = roomService.updateRoomType(
+				id,
+				room_id,
+				check_in,
+				check_out,
+				status,
+			);
+			return result != null;
+		},
+	);
 	ipcMain.handle("room:delete", (event, id) => {
 		return roomService.deleteRoomById(id);
 	});

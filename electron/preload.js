@@ -59,6 +59,15 @@ contextBridge.exposeInMainWorld("room", {
 	createRoomType: (name, price, capacity) => {
 		return ipcRenderer.invoke("roomTypes:create", name, price, capacity);
 	},
+	updateRoomType: (id, name, price, capacity) => {
+		return ipcRenderer.invoke(
+			"roomTypes:update",
+			id,
+			name,
+			price,
+			capacity,
+		);
+	},
 	deleteRoomTypeById: (id) => {
 		return ipcRenderer.invoke("roomTypes:delete", id);
 	},
@@ -68,6 +77,15 @@ contextBridge.exposeInMainWorld("room", {
 	},
 	createRoom: (room_number, room_type_id) => {
 		return ipcRenderer.invoke("room:create", room_number, room_type_id);
+	},
+	updateRoom: (id, room_number, room_type_id, status) => {
+		return ipcRenderer.invoke(
+			"room:update",
+			id,
+			room_number,
+			room_type_id,
+			status,
+		);
 	},
 	deleteRoomById: (id) => {
 		return ipcRenderer.invoke("room:delete", id);
