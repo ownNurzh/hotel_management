@@ -274,6 +274,7 @@ const submitUpdateForm = (formEl) => {
 							<el-button
 								type="danger"
 								size="small"
+								:disabled="row.id == 1"
 								@click="deleteUserType(row.id)"
 							>
 								Удалить
