@@ -65,13 +65,14 @@ contextBridge.exposeInMainWorld("room", {
 			arrayFileBuffers,
 		);
 	},
-	updateRoomType: (id, name, price, capacity) => {
+	updateRoomType: (id, name, price, capacity, arrayFileBuffers) => {
 		return ipcRenderer.invoke(
 			"roomTypes:update",
 			id,
 			name,
 			price,
 			capacity,
+			arrayFileBuffers,
 		);
 	},
 	deleteRoomTypeById: (id) => {

@@ -222,6 +222,13 @@ const updateRoomTypesForm = reactive({
 function openRoomTypesUpdateDialog(row) {
 	const raw = toRaw(row);
 	Object.assign(updateRoomTypesForm, raw);
+	updateRoomTypesForm.fileList = [];
+	// for (let i = 0; i < row.images?.length; i++) {
+	// 	updateRoomTypesForm.fileList.push({
+	// 		name: row.images[i],
+	// 		url: `hotel://UserData/uploads/${row.images[i]}`,
+	// 	});
+	// }
 	updateRoomTypesDialogVisible.value = true;
 }
 const submitRoomTypesUpdateForm = (formEl) => {
@@ -229,11 +236,19 @@ const submitRoomTypesUpdateForm = (formEl) => {
 	formEl.validate(async (valid) => {
 		if (valid) {
 			try {
+				const arrayBufferFiles = await Promise.all(
+					updateRoomTypesForm.fileList.map(async (f) => ({
+						name: f.raw.name,
+						type: f.raw.type,
+						buffer: await f.raw.arrayBuffer(),
+					})),
+				);
 				const result = await window?.room?.updateRoomType(
 					updateRoomTypesForm.id,
 					updateRoomTypesForm.name,
 					updateRoomTypesForm.price,
 					updateRoomTypesForm.capacity,
+					arrayBufferFiles,
 				);
 				if (result) {
 					ElMessage({
@@ -254,6 +269,7 @@ const submitRoomTypesUpdateForm = (formEl) => {
 					message: "Что то пошло не так. Проверьте данные еще раз.",
 					type: "error",
 				});
+				console.log(e);
 			}
 		} else {
 			console.log("error submit!");
@@ -595,6 +611,38 @@ const handleChange = (uploadFile, uploadFiles) => {
 				<el-form-item label="Вместимость" prop="capacity">
 					<el-input-number v-model="updateRoomTypesForm.capacity">
 					</el-input-number>
+				</el-form-item>
+				<el-form-item>
+					<el-avatar-group>
+						<el-avatar
+							v-for="(value, key) in updateRoomTypesForm?.images"
+							:key="value"
+							:size="80"
+							:src="`hotel://UserData/uploads/${value}`"
+						/> </el-avatar-group
+				></el-form-item>
+				<el-form-item label="Фото" prop="fileList">
+					<el-upload
+						v-model:file-list="updateRoomTypesForm.fileList"
+						action="#"
+						:on-preview="handlePreview"
+						:on-remove="handleRemove"
+						:on-change="handleChange"
+						list-type="picture-card"
+						drag
+						multiple
+						:limit="3"
+						:auto-upload="false"
+					>
+						<el-icon style="font-size: 50px"
+							><UploadFilled style="color: gray"
+						/></el-icon>
+						<template #tip>
+							<div>
+								В формате jpg/png и с размером меньше чем 2MB
+							</div>
+						</template>
+					</el-upload>
 				</el-form-item>
 			</el-form>
 			<template #footer>

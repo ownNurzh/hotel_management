@@ -65,7 +65,9 @@ const hotelDatasInDb = await window?.hotel?.get();
 						<el-row style="margin-top: 8px">
 							<el-text type="info" size="small">
 								{{
-									Math.round((obj.count / totalRooms) * 100)
+									Math.round(
+										(obj.count / (totalRooms || 1)) * 100,
+									)
 								}}% от общего
 							</el-text>
 						</el-row>
@@ -73,7 +75,9 @@ const hotelDatasInDb = await window?.hotel?.get();
 				</el-row>
 				<el-row style="margin-top: 12px">
 					<el-progress
-						:percentage="Math.round((obj.count / totalRooms) * 100)"
+						:percentage="
+							Math.round((obj.count / (totalRooms || 1)) * 100)
+						"
 						:color="
 							tagColorMap[appConfig.roomStatus[obj.status].type]
 						"
@@ -120,7 +124,8 @@ const hotelDatasInDb = await window?.hotel?.get();
 							<el-text type="info" size="small">
 								{{
 									Math.round(
-										(obj.count / totalReservations) * 100,
+										(obj.count / (totalReservations || 1)) *
+											100,
 									)
 								}}% от общего
 							</el-text>
@@ -130,7 +135,9 @@ const hotelDatasInDb = await window?.hotel?.get();
 				<el-row style="margin-top: 12px">
 					<el-progress
 						:percentage="
-							Math.round((obj.count / totalReservations) * 100)
+							Math.round(
+								(obj.count / (totalReservations || 1)) * 100,
+							)
 						"
 						:color="
 							tagColorMap[
@@ -156,7 +163,7 @@ const hotelDatasInDb = await window?.hotel?.get();
 
 	<el-row>
 		<el-col :span="24">
-			<el-descriptions border column="2">
+			<el-descriptions border :column="2">
 				<el-descriptions-item
 					v-if="hotelDatasInDb != null"
 					v-for="(key, value) in hotelDatasInDb"

@@ -5,8 +5,7 @@ class Room {
 	constructor(db) {
 		this.db = db;
 	}
-
-	createRoomType(name, price, capacity, arrayFileBuffers) {
+	saveImages(name, arrayFileBuffers) {
 		const savedPaths = [];
 		if (arrayFileBuffers?.length > 0) {
 			for (const [index, value] of arrayFileBuffers.entries()) {
@@ -21,6 +20,10 @@ class Room {
 			}
 		}
 		const jsonSavedPath = JSON.stringify(savedPaths);
+		return jsonSavedPath;
+	}
+	createRoomType(name, price, capacity, arrayFileBuffers) {
+		const jsonSavedPath = this.saveImages(name, arrayFileBuffers);
 
 		return this.db
 			.prepare(
@@ -28,13 +31,16 @@ class Room {
 			)
 			.run(name, price, capacity, jsonSavedPath);
 	}
-	updateRoomType(id, name, price, capacity) {
+	updateRoomType(id, name, price, capacity, arrayFileBuffers) {
+		const jsonSavedPath = this.saveImages(name, arrayFileBuffers);
 		const sql = `
 		UPDATE room_types
-		SET name = ?, price = ?, capacity = ?
+		SET name = ?, price = ?, capacity = ?, images = ?
 		WHERE id = ?
 	`;
-		return this.db.prepare(sql).run(name, price, capacity, id);
+		return this.db
+			.prepare(sql)
+			.run(name, price, capacity, jsonSavedPath, id);
 	}
 	getAllRoomTypes() {
 		const rows = this.db.prepare("SELECT * FROM room_types").all();

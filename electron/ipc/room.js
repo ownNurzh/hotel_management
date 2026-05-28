@@ -16,10 +16,19 @@ module.exports = () => {
 			return result != null;
 		},
 	);
-	ipcMain.handle("roomTypes:update", (event, id, name, price, capacity) => {
-		const result = roomService.updateRoomType(id, name, price, capacity);
-		return result != null;
-	});
+	ipcMain.handle(
+		"roomTypes:update",
+		(event, id, name, price, capacity, arrayFileBuffers) => {
+			const result = roomService.updateRoomType(
+				id,
+				name,
+				price,
+				capacity,
+				arrayFileBuffers,
+			);
+			return result != null;
+		},
+	);
 
 	ipcMain.handle("roomTypes:get", (event, login, password) => {
 		return roomService.getAllRoomTypes();
