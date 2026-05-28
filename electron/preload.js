@@ -164,3 +164,7 @@ contextBridge.exposeInMainWorld("reservation", {
 		return ipcRenderer.invoke("reservation:getStatusCounts");
 	},
 });
+
+contextBridge.exposeInMainWorld("app", {
+	openWindowForClient: () => ipcRenderer.send("main:openWindowForClient"),
+});

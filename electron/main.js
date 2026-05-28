@@ -1,4 +1,11 @@
-const { app, BrowserWindow, Menu, dialog, protocol } = require("electron/main");
+const {
+	app,
+	BrowserWindow,
+	Menu,
+	dialog,
+	protocol,
+	ipcMain,
+} = require("electron/main");
 
 const path = require("node:path");
 const fs = require("node:fs");
@@ -41,6 +48,33 @@ const createWindow = () => {
 		console.log("development");
 	}
 };
+function createSecondWindow() {
+	const win = new BrowserWindow({
+		width: 1200,
+		height: 700,
+		icon: config.appIconPath,
+		webPreferences: {
+			preload: path.join(__dirname, "preload.js"),
+		},
+	});
+	if (app.isPackaged) {
+		//win.loadFile("")
+		win.loadFile(
+			path.join(
+				app.getAppPath(),
+				"nuxt-app",
+				".output",
+				"public",
+				"client",
+				"index.html",
+			),
+		);
+		console.log("production");
+	} else {
+		win.loadURL("http://localhost:3000/client");
+		console.log("development");
+	}
+}
 app.disableHardwareAcceleration();
 app.whenReady().then(() => {
 	createWindow();
@@ -53,6 +87,9 @@ app.whenReady().then(() => {
 	protocol.registerFileProtocol("hotel", (request, callback) => {
 		const filePath = request.url.replace("hotel://", "");
 		callback(path.join(app.getPath("userData"), filePath));
+	});
+	ipcMain.on("main:openWindowForClient", () => {
+		createSecondWindow();
 	});
 });
 

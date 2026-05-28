@@ -174,15 +174,33 @@ const submitReservationForm = (formEl) => {
 		}
 	});
 };
+async function openWindowForClient() {
+	console.log("OPEN");
+	await window?.app?.openWindowForClient();
+}
 </script>
 <template>
 	<el-row>
 		<el-col :span="24">
 			<el-card>
 				<template #header>
-					<h1 style="font-weight: bold; font-size: 20px">
+					<span
+						style="
+							font-weight: bold;
+							font-size: 20px;
+							margin-right: 5px;
+						"
+					>
 						Посетители
-					</h1>
+					</span>
+					<el-button
+						type="primary"
+						plain
+						size="small"
+						@click="openWindowForClient()"
+					>
+						Открыть окно для клиентов
+					</el-button>
 				</template>
 				<el-form
 					ref="guestFormRef"
