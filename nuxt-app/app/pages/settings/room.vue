@@ -435,6 +435,14 @@ const handleChange = (uploadFile, uploadFiles) => {
 					<el-table-column prop="name" label="Название" />
 					<el-table-column prop="price" label="Цена" />
 					<el-table-column prop="capacity" label="Вместимость" />
+					<el-table-column
+						prop="images"
+						label="Количество фотографий"
+					>
+						<template #default="{ row }">
+							{{ row.images?.length }}
+						</template>
+					</el-table-column>
 					<el-table-column fixed="right" label="Операций">
 						<template #default="{ row }">
 							<el-button

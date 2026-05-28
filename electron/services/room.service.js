@@ -37,7 +37,12 @@ class Room {
 		return this.db.prepare(sql).run(name, price, capacity, id);
 	}
 	getAllRoomTypes() {
-		return this.db.prepare("SELECT * FROM room_types").all();
+		const rows = this.db.prepare("SELECT * FROM room_types").all();
+
+		return rows.map((row) => ({
+			...row,
+			images: JSON.parse(row.images || "[]"),
+		}));
 	}
 	deleteRoomTypeById(id) {
 		return this.db.prepare("DELETE FROM room_types WHERE id = ?").run(id);
