@@ -73,7 +73,6 @@ const submitRoomTypeForm = (formEl) => {
 						buffer: await f.raw.arrayBuffer(),
 					})),
 				);
-				console.log(roomTypesForm.fileList.map((f) => f.raw));
 				const result = await window?.room?.createRoomType(
 					roomTypesForm.name,
 					roomTypesForm.price,
@@ -319,6 +318,27 @@ const handlePreview = (file) => {
 	dialogImageUrl.value = file.url;
 	dialogUploadVisible.value = true;
 };
+const handleChange = (uploadFile, uploadFiles) => {
+	const fileFormats = ["image/png", "image/jpeg"];
+
+	if (!fileFormats.includes(uploadFile.raw.type)) {
+		ElMessage({ message: "Принимаются только png, jpeg.", type: "error" });
+		roomTypesForm.fileList = uploadFiles.filter(
+			(f) => f.uid !== uploadFile.uid,
+		);
+		return;
+	}
+
+	if (uploadFile.raw.size / 1024 / 1024 > 2) {
+		ElMessage({ message: "Файл не должен превышать 2MB!", type: "error" });
+		roomTypesForm.fileList = uploadFiles.filter(
+			(f) => f.uid !== uploadFile.uid,
+		);
+		return;
+	}
+
+	ElMessage({ message: "Файл добавлен!", type: "success" });
+};
 </script>
 <template>
 	<el-row>
@@ -363,6 +383,7 @@ const handlePreview = (file) => {
 							action="#"
 							:on-preview="handlePreview"
 							:on-remove="handleRemove"
+							:on-change="handleChange"
 							list-type="picture-card"
 							drag
 							multiple
@@ -375,7 +396,7 @@ const handlePreview = (file) => {
 							<template #tip>
 								<div>
 									В формате jpg/png и с размером меньше чем
-									500кб
+									2MB
 								</div>
 							</template>
 						</el-upload>
