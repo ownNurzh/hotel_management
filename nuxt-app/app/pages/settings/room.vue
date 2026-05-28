@@ -1,5 +1,5 @@
 <script setup>
-import { InfoFilled } from "@element-plus/icons-vue";
+import { InfoFilled, UploadFilled } from "@element-plus/icons-vue";
 const appConfig = useAppConfig();
 const roomTypesFormRef = ref();
 
@@ -7,6 +7,7 @@ const roomTypesForm = reactive({
 	name: "",
 	price: 0,
 	capacity: 0,
+	fileList: [],
 });
 
 const RoomTypesFormRules = {
@@ -15,6 +16,7 @@ const RoomTypesFormRules = {
 	capacity: [
 		{ required: true, message: "Введите вместимость", trigger: "blur" },
 	],
+	fileList: [{ required: true, message: "Выберите фото", trigger: "blur" }],
 };
 
 const RoomTypesDatas = ref([
@@ -64,10 +66,19 @@ const submitRoomTypeForm = (formEl) => {
 	formEl.validate(async (valid) => {
 		if (valid) {
 			try {
+				const arrayBufferFiles = await Promise.all(
+					roomTypesForm.fileList.map(async (f) => ({
+						name: f.raw.name,
+						type: f.raw.type,
+						buffer: await f.raw.arrayBuffer(),
+					})),
+				);
+				console.log(roomTypesForm.fileList.map((f) => f.raw));
 				const result = await window?.room?.createRoomType(
 					roomTypesForm.name,
 					roomTypesForm.price,
 					roomTypesForm.capacity,
+					arrayBufferFiles,
 				);
 				if (result) {
 					ElMessage({
@@ -207,6 +218,7 @@ const updateRoomTypesForm = reactive({
 	name: "",
 	price: 0,
 	capacity: 0,
+	fileList: [],
 });
 function openRoomTypesUpdateDialog(row) {
 	const raw = toRaw(row);
@@ -298,6 +310,15 @@ const submitRoomUpdateForm = (formEl) => {
 		}
 	});
 };
+const handleRemove = (uploadFile, uploadFiles) => {
+	console.log(uploadFile, uploadFiles);
+};
+const dialogImageUrl = ref("");
+const dialogUploadVisible = ref(false);
+const handlePreview = (file) => {
+	dialogImageUrl.value = file.url;
+	dialogUploadVisible.value = true;
+};
 </script>
 <template>
 	<el-row>
@@ -335,6 +356,40 @@ const submitRoomUpdateForm = (formEl) => {
 					<el-form-item label="Вместимость" prop="capacity">
 						<el-input-number v-model="roomTypesForm.capacity">
 						</el-input-number>
+					</el-form-item>
+					<el-form-item label="Фото" prop="fileList">
+						<el-upload
+							v-model:file-list="roomTypesForm.fileList"
+							action="#"
+							:on-preview="handlePreview"
+							:on-remove="handleRemove"
+							list-type="picture-card"
+							drag
+							multiple
+							:limit="3"
+							:auto-upload="false"
+						>
+							<el-icon style="font-size: 50px"
+								><UploadFilled style="color: gray"
+							/></el-icon>
+							<template #tip>
+								<div>
+									В формате jpg/png и с размером меньше чем
+									500кб
+								</div>
+							</template>
+						</el-upload>
+						<el-dialog
+							v-model="dialogUploadVisible"
+							width="500px"
+							align-center
+						>
+							<img
+								w-full
+								:src="dialogImageUrl"
+								alt="Preview Image"
+							/>
+						</el-dialog>
 					</el-form-item>
 					<el-form-item>
 						<el-button

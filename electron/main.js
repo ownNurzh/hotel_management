@@ -1,11 +1,9 @@
-const { app, BrowserWindow, Menu, dialog } = require("electron/main");
+const { app, BrowserWindow, Menu, dialog, protocol } = require("electron/main");
 
 const path = require("node:path");
 const fs = require("node:fs");
 const config = require("./config");
-if (!fs.existsSync(config.userDataPath)) {
-	fs.mkdirSync(config.userDataPath, { recursive: true });
-}
+
 const initMenu = require("./menu");
 
 const allIpcHandlers = require("./ipc");
@@ -51,6 +49,10 @@ app.whenReady().then(() => {
 		if (BrowserWindow.getAllWindows().length === 0) {
 			createWindow();
 		}
+	});
+	protocol.registerFileProtocol("hotel", (request, callback) => {
+		const filePath = request.url.replace("hotel://", "");
+		callback(path.join(app.getPath("userData"), filePath));
 	});
 });
 
