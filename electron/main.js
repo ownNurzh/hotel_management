@@ -39,9 +39,6 @@ const createWindow = () => {
 		);
 		console.log("production");
 	} else {
-		console.log(__dirname);
-		console.log(process.resourcesPath);
-		console.log(app.getAppPath());
 		win.loadURL("http://localhost:3000/");
 		console.log("development");
 	}
