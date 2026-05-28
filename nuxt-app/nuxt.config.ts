@@ -5,4 +5,19 @@ export default defineNuxtConfig({
 	css: ["@unocss/reset/tailwind.css"],
 	devtools: { enabled: true },
 	ssr: false,
+	app: {
+		baseURL: "./",
+	},
+
+	router: {
+		options: {
+			hashMode: true,
+		},
+	},
+
+	hooks: {
+		"prerender:routes"({ routes }) {
+			routes.clear();
+		},
+	},
 });
