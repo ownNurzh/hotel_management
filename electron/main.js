@@ -32,7 +32,6 @@ const createWindow = () => {
 		},
 	});
 	if (app.isPackaged) {
-		//win.loadFile("")
 		win.loadFile(
 			path.join(
 				app.getAppPath(),
@@ -58,16 +57,15 @@ function createSecondWindow() {
 		},
 	});
 	if (app.isPackaged) {
-		//win.loadFile("")
 		win.loadFile(
 			path.join(
 				app.getAppPath(),
 				"nuxt-app",
 				".output",
 				"public",
-				"client",
 				"index.html",
 			),
+			{ hash: "/client" },
 		);
 		console.log("production");
 	} else {

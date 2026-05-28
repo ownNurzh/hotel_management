@@ -33,6 +33,10 @@ const RoomTypesDatas = ref([
 		images: ["https://picsum.photos/1200/800?3", ""],
 	},
 ]);
+async function refreshRoomTypes() {
+	RoomTypesDatas.value = await window?.room?.getAllRoomTypes();
+}
+await refreshRoomTypes();
 </script>
 
 <template>
@@ -52,7 +56,7 @@ const RoomTypesDatas = ref([
 							:key="img_key"
 						>
 							<el-image
-								:src="image"
+								:src="`hotel://UserData/uploads/${image}`"
 								fit="cover"
 								style="width: 100%; height: 100%"
 							/>
