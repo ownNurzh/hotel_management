@@ -4,10 +4,18 @@ const { roomService } = require("../services");
 
 module.exports = () => {
 	//room types
-	ipcMain.handle("roomTypes:create", (event, name, price, capacity) => {
-		const result = roomService.createRoomType(name, price, capacity);
-		return result != null;
-	});
+	ipcMain.handle(
+		"roomTypes:create",
+		(event, name, price, capacity, arrayFileBuffers) => {
+			const result = roomService.createRoomType(
+				name,
+				price,
+				capacity,
+				arrayFileBuffers,
+			);
+			return result != null;
+		},
+	);
 	ipcMain.handle("roomTypes:update", (event, id, name, price, capacity) => {
 		const result = roomService.updateRoomType(id, name, price, capacity);
 		return result != null;

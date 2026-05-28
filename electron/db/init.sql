@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS room_types (
 
     name TEXT UNIQUE NOT NULL,
     price INTEGER NOT NULL,
-    capacity INTEGER NOT NULL
+    capacity INTEGER NOT NULL,
+    images TEXT NOT NULL DEFAULT ''
 );
 
 CREATE TABLE IF NOT EXISTS rooms (

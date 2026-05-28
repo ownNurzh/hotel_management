@@ -56,8 +56,14 @@ contextBridge.exposeInMainWorld("room", {
 	getAllRoomTypes: () => {
 		return ipcRenderer.invoke("roomTypes:get");
 	},
-	createRoomType: (name, price, capacity) => {
-		return ipcRenderer.invoke("roomTypes:create", name, price, capacity);
+	createRoomType: (name, price, capacity, arrayFileBuffers) => {
+		return ipcRenderer.invoke(
+			"roomTypes:create",
+			name,
+			price,
+			capacity,
+			arrayFileBuffers,
+		);
 	},
 	updateRoomType: (id, name, price, capacity) => {
 		return ipcRenderer.invoke(

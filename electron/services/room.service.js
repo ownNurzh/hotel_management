@@ -1,13 +1,32 @@
+const path = require("path");
+const fs = require("fs");
+const config = require("../config");
 class Room {
 	constructor(db) {
 		this.db = db;
 	}
-	createRoomType(name, price, capacity) {
+
+	createRoomType(name, price, capacity, arrayFileBuffers) {
+		const savedPaths = [];
+		if (arrayFileBuffers?.length > 0) {
+			for (const [index, value] of arrayFileBuffers.entries()) {
+				const ext = path.extname(value.name);
+
+				const fileName = `roomtype_${name}_${index}${ext}`;
+				fs.writeFileSync(
+					path.join(config.uploadsPath, fileName),
+					Buffer.from(value.buffer),
+				);
+				savedPaths.push(fileName);
+			}
+		}
+		const jsonSavedPath = JSON.stringify(savedPaths);
+
 		return this.db
 			.prepare(
-				"INSERT INTO room_types (name,price,capacity) VALUES (?, ?, ?)",
+				"INSERT INTO room_types (name,price,capacity,images) VALUES (?, ?, ?,?)",
 			)
-			.run(name, price, capacity);
+			.run(name, price, capacity, jsonSavedPath);
 	}
 	updateRoomType(id, name, price, capacity) {
 		const sql = `
