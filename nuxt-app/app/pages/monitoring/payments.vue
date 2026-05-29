@@ -26,6 +26,37 @@ const paymentsDatas = ref([
 	},
 ]);
 
+const getSummaries = (param) => {
+	const { columns, data } = param;
+	const sums = [];
+	columns.forEach((column, index) => {
+		if (index === 0) {
+			sums[index] = h("div", { style: { textDecoration: "underline" } }, [
+				"&",
+			]);
+			return;
+		}
+		if (column.property != "total_money") {
+			return;
+		}
+		const values = data.map((item) => Number(item[column.property]));
+		if (!values.every((value) => Number.isNaN(value))) {
+			sums[index] = `${values.reduce((prev, curr) => {
+				const value = Number(curr);
+				if (!Number.isNaN(value)) {
+					return prev + curr;
+				} else {
+					return prev;
+				}
+			}, 0)} KZT`;
+		} else {
+			sums[index] = "N/A";
+		}
+	});
+
+	return sums;
+};
+
 async function refreshPayments() {
 	paymentsDatas.value = await window?.payments?.getAll();
 }
@@ -38,7 +69,13 @@ await refreshPayments();
 				<template #header>
 					<h1 style="font-weight: bold; font-size: 20px">Платежи</h1>
 				</template>
-				<el-table :data="paymentsDatas" stripe height="500px">
+				<el-table
+					:data="paymentsDatas"
+					stripe
+					height="500px"
+					show-summary
+					:summary-method="getSummaries"
+				>
 					<el-table-column type="selection" width="55" />
 					<el-table-column prop="id" label="#" />
 					<el-table-column prop="reservation_id" label="Айди брони" />
