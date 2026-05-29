@@ -151,16 +151,15 @@ const submitReservationForm = (formEl) => {
 	formEl.validate(async (valid) => {
 		if (valid) {
 			try {
-				await window?.reservation?.create(
+				const result = await window?.reservation?.create(
 					reservationDatas.guest_id,
 					reservationDatas.room_id,
 					reservationDatas.date[0],
 					reservationDatas.date[1],
 				);
-
 				ElMessage({
-					message: "Вы успешно создали бронь!",
-					type: "success",
+					message: result?.message,
+					type: result?.status ? "success" : "error",
 				});
 			} catch (e) {
 				ElMessage({

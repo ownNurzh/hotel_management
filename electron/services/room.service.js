@@ -22,6 +22,9 @@ class Room {
 		const jsonSavedPath = JSON.stringify(savedPaths);
 		return jsonSavedPath;
 	}
+	getRoomTypeById(id) {
+		return this.db.prepare("SELECT * FROM room_types WHERE id = ?").get(id);
+	}
 	createRoomType(name, price, capacity, arrayFileBuffers) {
 		const jsonSavedPath = this.saveImages(name, arrayFileBuffers);
 
@@ -78,6 +81,9 @@ class Room {
 		LEFT JOIN room_types ON room_types.id = rooms.room_type_id
 `;
 		return this.db.prepare(sql).all();
+	}
+	getRoomById(id) {
+		return this.db.prepare("SELECT * FROM rooms WHERE id = ?").get(id);
 	}
 	deleteRoomById(id) {
 		return this.db.prepare("DELETE FROM rooms WHERE id = ?").run(id);

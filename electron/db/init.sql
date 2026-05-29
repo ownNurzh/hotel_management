@@ -78,3 +78,14 @@ CREATE TABLE IF NOT EXISTS reservations (
     FOREIGN KEY (guest_id) REFERENCES guests(id),
     FOREIGN KEY (room_id) REFERENCES rooms(id)
 );
+
+CREATE TABLE IF NOT EXISTS payments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    reservation_id INTEGER NOT NULL,
+    total_money INTEGER NOT NULL,
+
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (reservation_id) REFERENCES reservations(id)
+);
