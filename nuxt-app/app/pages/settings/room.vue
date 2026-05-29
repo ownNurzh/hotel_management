@@ -355,6 +355,14 @@ const handleChange = (uploadFile, uploadFiles) => {
 
 	ElMessage({ message: "Файл добавлен!", type: "success" });
 };
+
+const filterTag = (value, row) => {
+	return row.status === value;
+};
+const filterStatus = [];
+for (let i = 0; i < appConfig.roomStatus.length; i++) {
+	filterStatus.push({ text: appConfig.roomStatus[i].name, value: i });
+}
 </script>
 <template>
 	<el-row>
@@ -534,7 +542,12 @@ const handleChange = (uploadFile, uploadFiles) => {
 							{{ row.room_type_name }}({{ row.room_type_id }})
 						</template>
 					</el-table-column>
-					<el-table-column prop="status" label="Статус">
+					<el-table-column
+						prop="status"
+						label="Статус"
+						:filter-method="filterTag"
+						:filters="filterStatus"
+					>
 						<template #default="{ row }">
 							<el-tag
 								:type="

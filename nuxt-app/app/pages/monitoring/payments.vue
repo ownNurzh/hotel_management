@@ -37,6 +37,7 @@ const getSummaries = (param) => {
 			return;
 		}
 		if (column.property != "total_money") {
+			sums[index] = "N/A";
 			return;
 		}
 		const values = data.map((item) => Number(item[column.property]));

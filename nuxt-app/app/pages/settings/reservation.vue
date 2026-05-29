@@ -121,6 +121,13 @@ const submitUpdateForm = (formEl) => {
 		}
 	});
 };
+const filterTag = (value, row) => {
+	return row.status === value;
+};
+const filterStatus = [];
+for (let i = 0; i < appConfig.roomStatus.length; i++) {
+	filterStatus.push({ text: appConfig.reservationStatus[i].name, value: i });
+}
 </script>
 <template>
 	<el-row>
@@ -144,7 +151,12 @@ const submitUpdateForm = (formEl) => {
 						label="Дата ухода"
 						sortable
 					/>
-					<el-table-column prop="status" label="Статус">
+					<el-table-column
+						prop="status"
+						label="Статус"
+						:filter-method="filterTag"
+						:filters="filterStatus"
+					>
 						<template #default="{ row }">
 							<el-tag
 								:type="
