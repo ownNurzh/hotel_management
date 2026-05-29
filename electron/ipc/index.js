@@ -5,6 +5,7 @@ const roomHandlers = require("./room");
 const hotelHandlers = require("./hotel");
 const guestHandlers = require("./guest");
 const reservationHandlers = require("./reservation");
+const paymentHandlers = require("./payment");
 
 module.exports = () => {
 	authHandlers();
@@ -14,4 +15,5 @@ module.exports = () => {
 	hotelHandlers();
 	guestHandlers();
 	reservationHandlers();
+	paymentHandlers();
 };

@@ -168,3 +168,6 @@ contextBridge.exposeInMainWorld("reservation", {
 contextBridge.exposeInMainWorld("app", {
 	openWindowForClient: () => ipcRenderer.send("main:openWindowForClient"),
 });
+contextBridge.exposeInMainWorld("payments", {
+	getAll: () => ipcRenderer.invoke("payment:get"),
+});

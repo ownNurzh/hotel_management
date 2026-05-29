@@ -129,7 +129,7 @@ const submitUpdateForm = (formEl) => {
 				<template #header>
 					<h1 style="font-weight: bold; font-size: 20px">Брони</h1>
 				</template>
-				<el-table :data="filterTableData" stripe height="200px">
+				<el-table :data="filterTableData" stripe height="500px">
 					<el-table-column type="selection" width="55" />
 					<el-table-column prop="id" label="#" />
 					<el-table-column prop="guest_id" label="Айди гостя" />
