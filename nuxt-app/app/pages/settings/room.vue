@@ -363,6 +363,15 @@ const filterStatus = [];
 for (let i = 0; i < appConfig.roomStatus.length; i++) {
 	filterStatus.push({ text: appConfig.roomStatus[i].name, value: i });
 }
+const openTourTypeRoom = ref(false);
+const typeRoomRef1 = ref();
+const typeRoomRef2 = ref();
+const typeRoomRef3 = ref();
+const typeRoomRef4 = ref();
+
+const openTourRoom = ref(false);
+const RoomRef1 = ref();
+const RoomRef2 = ref();
 </script>
 <template>
 	<el-row>
@@ -372,6 +381,13 @@ for (let i = 0; i < appConfig.roomStatus.length; i++) {
 					<h1 style="font-weight: bold; font-size: 20px">
 						Типы комнат
 					</h1>
+					<el-button
+						type="primary"
+						@click="openTourTypeRoom = true"
+						plain
+						size="small"
+						>Мини гайд</el-button
+					>
 				</template>
 				<el-form
 					ref="roomTypesFormRef"
@@ -387,23 +403,31 @@ for (let i = 0; i < appConfig.roomStatus.length; i++) {
 							placeholder="Введите название"
 							:prefix-icon="InfoFilled"
 							clearable
+							ref="typeRoomRef1"
 						/>
 					</el-form-item>
 
 					<el-form-item label="Цена" prop="price">
-						<el-input-number v-model="roomTypesForm.price">
+						<el-input-number
+							v-model="roomTypesForm.price"
+							ref="typeRoomRef2"
+						>
 							<template #suffix>
 								<span>KZT</span>
 							</template>
 						</el-input-number>
 					</el-form-item>
 					<el-form-item label="Вместимость" prop="capacity">
-						<el-input-number v-model="roomTypesForm.capacity">
+						<el-input-number
+							v-model="roomTypesForm.capacity"
+							ref="typeRoomRef3"
+						>
 						</el-input-number>
 					</el-form-item>
 					<el-form-item label="Фото" prop="fileList">
 						<el-upload
 							v-model:file-list="roomTypesForm.fileList"
+							ref="typeRoomRef4"
 							action="#"
 							:on-preview="handlePreview"
 							:on-remove="handleRemove"
@@ -452,6 +476,29 @@ for (let i = 0; i < appConfig.roomStatus.length; i++) {
 						</el-button>
 					</el-form-item>
 				</el-form>
+				<el-tour v-model="openTourTypeRoom">
+					<el-tour-step
+						:target="typeRoomRef1?.$el"
+						title="Название"
+						description="Название типа комнаты.Например Standard,Lux,Vip."
+					/>
+
+					<el-tour-step
+						:target="typeRoomRef2?.$el"
+						title="Цена"
+						description="Цена за такой тип комнаты.Все комнаты с таким типом получат его цену."
+					/>
+					<el-tour-step
+						:target="typeRoomRef3?.$el"
+						title="Вместимость"
+						description="До скольки людей можно проживать в этом типе комнаты."
+					/>
+					<el-tour-step
+						:target="typeRoomRef4?.$el"
+						title="Фото"
+						description="Картинки комнаты.Они будут показываться в окне для клиентов."
+					/>
+				</el-tour>
 				<el-divider></el-divider>
 				<el-table :data="RoomTypesDatas" stripe height="200px">
 					<el-table-column type="selection" width="55" />
@@ -494,6 +541,13 @@ for (let i = 0; i < appConfig.roomStatus.length; i++) {
 			<el-card>
 				<template #header>
 					<h1 style="font-weight: bold; font-size: 20px">Комнаты</h1>
+					<el-button
+						type="primary"
+						@click="openTourRoom = true"
+						plain
+						size="small"
+						>Мини гайд</el-button
+					>
 				</template>
 				<el-form
 					ref="roomFormRef"
@@ -505,6 +559,7 @@ for (let i = 0; i < appConfig.roomStatus.length; i++) {
 				>
 					<el-form-item label="Номер комнаты" prop="room_number">
 						<el-input
+							ref="RoomRef1"
 							v-model="roomForm.room_number"
 							placeholder="Введите номер комнаты"
 							:prefix-icon="InfoFilled"
@@ -513,7 +568,10 @@ for (let i = 0; i < appConfig.roomStatus.length; i++) {
 					</el-form-item>
 
 					<el-form-item label="Тип комнаты" prop="room_type_id">
-						<el-input-number v-model="roomForm.room_type_id">
+						<el-input-number
+							v-model="roomForm.room_type_id"
+							ref="RoomRef2"
+						>
 						</el-input-number>
 					</el-form-item>
 					<el-form-item>
@@ -532,6 +590,19 @@ for (let i = 0; i < appConfig.roomStatus.length; i++) {
 						</el-button>
 					</el-form-item>
 				</el-form>
+				<el-tour v-model="openTourRoom">
+					<el-tour-step
+						:target="RoomRef1?.$el"
+						title="Номер комнаты"
+						description="Номер комнаты который будет отображаться.Например F101,N1."
+					/>
+
+					<el-tour-step
+						:target="RoomRef2?.$el"
+						title="Удобный номер типа комнаты"
+						description="Для быстрого запоминание используется номер типа комнаты.Например в таблице типов комнаты в столбце # будет показываться его номер."
+					/>
+				</el-tour>
 				<el-divider></el-divider>
 				<el-table :data="RoomDatas" stripe height="300px">
 					<el-table-column type="selection" width="55" />
