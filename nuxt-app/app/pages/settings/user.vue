@@ -169,6 +169,12 @@ const submitUpdateForm = (formEl) => {
 		}
 	});
 };
+const openTour = ref(false);
+const Ref1 = ref();
+const Ref2 = ref();
+const Ref3 = ref();
+const Ref4 = ref();
+const Ref5 = ref();
 </script>
 <template>
 	<el-row>
@@ -176,6 +182,13 @@ const submitUpdateForm = (formEl) => {
 			<el-card>
 				<template #header>
 					<h1 style="font-weight: bold; font-size: 20px">Юзеры</h1>
+					<el-button
+						type="primary"
+						@click="openTour = true"
+						plain
+						size="small"
+						>Мини гайд</el-button
+					>
 				</template>
 				<el-form
 					ref="usersFormRef"
@@ -187,6 +200,7 @@ const submitUpdateForm = (formEl) => {
 				>
 					<el-form-item label="Имя" prop="first_name">
 						<el-input
+							ref="Ref1"
 							v-model="usersForm.first_name"
 							placeholder="Введите Имя"
 							:prefix-icon="InfoFilled"
@@ -196,6 +210,7 @@ const submitUpdateForm = (formEl) => {
 
 					<el-form-item label="Фамилия" prop="second_name">
 						<el-input
+							ref="Ref2"
 							v-model="usersForm.second_name"
 							placeholder="Введите Фамилию"
 							:prefix-icon="InfoFilled"
@@ -204,6 +219,7 @@ const submitUpdateForm = (formEl) => {
 					</el-form-item>
 					<el-form-item label="Логин" prop="login">
 						<el-input
+							ref="Ref3"
 							v-model="usersForm.login"
 							placeholder="Введите логин"
 							:prefix-icon="Avatar"
@@ -212,6 +228,7 @@ const submitUpdateForm = (formEl) => {
 					</el-form-item>
 					<el-form-item label="Пароль" prop="password">
 						<el-input
+							ref="Ref4"
 							v-model="usersForm.password"
 							placeholder="Введите пароль"
 							:prefix-icon="Lock"
@@ -222,6 +239,7 @@ const submitUpdateForm = (formEl) => {
 					<el-tag size="small" type="warning">Reception: 2</el-tag>
 					<el-form-item label="Роль" prop="role_id">
 						<el-input-number
+							ref="Ref5"
 							v-model="usersForm.role_id"
 						></el-input-number>
 					</el-form-item>
@@ -241,6 +259,34 @@ const submitUpdateForm = (formEl) => {
 						</el-button>
 					</el-form-item>
 				</el-form>
+				<el-tour v-model="openTour">
+					<el-tour-step
+						:target="Ref1?.$el"
+						title="Имя"
+						description="Имя пользователя который будет отображаться."
+					/>
+
+					<el-tour-step
+						:target="Ref2?.$el"
+						title="Фамилия"
+						description="Фамилия пользователя который будет отображаться."
+					/>
+					<el-tour-step
+						:target="Ref3?.$el"
+						title="Логин"
+						description="Логин пользователя по которому будут совершаться вход в аккаунт."
+					/>
+					<el-tour-step
+						:target="Ref4?.$el"
+						title="Пароль"
+						description="Пароль пользователя нужен для входа в аккаунт."
+					/>
+					<el-tour-step
+						:target="Ref5?.$el"
+						title="Роль"
+						description="Роль пользователя.1 - admin,2 - reception.Только админы имеют доступ к этой странице."
+					/>
+				</el-tour>
 				<el-divider></el-divider>
 				<el-table :data="usersDatas" stripe height="200px">
 					<el-table-column type="selection" width="55" />
