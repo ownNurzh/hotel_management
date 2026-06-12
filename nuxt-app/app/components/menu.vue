@@ -34,19 +34,21 @@ const profileVisible = ref(false);
 			flex-direction: column;
 		"
 	>
-		<span
+		<div
 			style="
-				font-size: 25px;
+				width: 100%;
 				display: flex;
-				justify-content: center;
 				align-items: center;
-				color: white;
-				margin-bottom: 2px;
-				gap: 3px;
+				justify-content: center;
+				margin: 10px 0px;
 			"
-			>Hotel System<el-icon><Management /></el-icon
-		></span>
-
+		>
+			<img src="/app-icon.png" style="width: 65px; height: 65px" />
+			<el-divider direction="vertical"></el-divider>
+			<span style="font-weight: bold; color: white; font-size: 18px"
+				>Hotel System</span
+			>
+		</div>
 		<el-sub-menu index="/monitoring">
 			<template #title>
 				<el-icon><Platform /></el-icon>

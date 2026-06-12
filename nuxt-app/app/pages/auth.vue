@@ -47,7 +47,21 @@ const submitForm = (formEl) => {
 		<el-col :span="6">
 			<el-card>
 				<template #header>
-					<el-text tag="b" size="large">Вход в систему</el-text>
+					<div
+						style="
+							width: 100%;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+						"
+					>
+						<img
+							src="/app-icon-t.png"
+							style="width: 80px; height: 80px"
+						/>
+						<el-divider direction="vertical"></el-divider>
+						<span style="font-weight: bold">Вход в систему</span>
+					</div>
 				</template>
 
 				<el-form
