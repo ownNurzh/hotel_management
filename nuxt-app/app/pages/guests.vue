@@ -177,21 +177,26 @@ async function openWindowForClient() {
 	console.log("OPEN");
 	await window?.app?.openWindowForClient();
 }
+const openTour = ref(false);
+const Ref1 = ref();
+const Ref2 = ref();
+const Ref3 = ref();
 </script>
 <template>
 	<el-row>
 		<el-col :span="24">
 			<el-card>
 				<template #header>
-					<span
-						style="
-							font-weight: bold;
-							font-size: 20px;
-							margin-right: 5px;
-						"
-					>
+					<h1 style="font-weight: bold; font-size: 20px">
 						Посетители
-					</span>
+					</h1>
+					<el-button
+						type="primary"
+						@click="openTour = true"
+						plain
+						size="small"
+						>Мини гайд</el-button
+					>
 					<el-button
 						type="primary"
 						plain
@@ -211,6 +216,7 @@ async function openWindowForClient() {
 				>
 					<el-form-item label="Имя" prop="first_name">
 						<el-input
+							ref="Ref1"
 							v-model="guestForm.first_name"
 							placeholder="Введите имя"
 							:prefix-icon="InfoFilled"
@@ -220,6 +226,7 @@ async function openWindowForClient() {
 
 					<el-form-item label="Фамилия" prop="second_name">
 						<el-input
+							ref="Ref2"
 							v-model="guestForm.second_name"
 							placeholder="Введите фамилию"
 							:prefix-icon="InfoFilled"
@@ -231,6 +238,7 @@ async function openWindowForClient() {
 						prop="document_number"
 					>
 						<el-input
+							ref="Ref3"
 							v-model="guestForm.document_number"
 							placeholder="Введите номер документа"
 							:prefix-icon="Key"
@@ -253,6 +261,25 @@ async function openWindowForClient() {
 						</el-button>
 					</el-form-item>
 				</el-form>
+				<el-tour v-model="openTour">
+					<el-tour-step
+						:target="Ref1?.$el"
+						title="Имя"
+						description="Укажите Имя посетителя который будет отображаться и по нему делаться поиск."
+					/>
+
+					<el-tour-step
+						:target="Ref2?.$el"
+						title="Фамилия"
+						description="Укажите Фамилию посетителя который будет отображаться и по нему делаться поиск."
+					/>
+					<el-tour-step
+						:target="Ref3?.$el"
+						title="Номер документа"
+						description="Укажите номер документа, идентифицирующего посетителя (паспорт, удостоверение личности или иной документ, удостоверяющий личность).
+"
+					/>
+				</el-tour>
 				<el-divider></el-divider>
 				<el-table :data="filterTableData" stripe height="200px">
 					<el-table-column type="selection" width="55" />
