@@ -1,5 +1,3 @@
-const { stat } = require("original-fs");
-
 class Reservation {
 	constructor(db, paymentService, roomService) {
 		this.db = db;

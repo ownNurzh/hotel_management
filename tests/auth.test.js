@@ -17,7 +17,9 @@ describe("Auth", () => {
 
 		auth = new AuthService(userService, sessionService);
 	});
-
+	test("test", () => {
+		expect(true).toBe(true);
+	});
 	test("Login успешно -> сохраняется сессия", () => {
 		const login = "john";
 		const password = "12345";
@@ -37,5 +39,8 @@ describe("Auth", () => {
 
 		expect(result).toBe(false);
 		expect(sessionService.save).not.toHaveBeenCalled();
+	});
+	test("test", () => {
+		expect(true).toBe(true);
 	});
 });

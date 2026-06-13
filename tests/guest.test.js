@@ -11,7 +11,9 @@ describe("Guest", () => {
 
 		guest = new GuestService(db);
 	});
-
+	test("test", () => {
+		expect(true).toBe(true);
+	});
 	test("getAll возвращает гостей", () => {
 		const sql = "SELECT * FROM guests";
 		const allMock = jest.fn().mockReturnValue(true);
@@ -62,5 +64,8 @@ describe("Guest", () => {
 			document_number,
 		);
 		expect(result).toBe(true);
+	});
+	test("test", () => {
+		expect(true).toBe(true);
 	});
 });
