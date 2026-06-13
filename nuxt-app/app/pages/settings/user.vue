@@ -8,7 +8,7 @@ const usersForm = reactive({
 	second_name: "",
 	login: "",
 	password: "",
-	role_id: 0,
+	role_id: 1,
 });
 
 const usersFormRules = {
@@ -125,7 +125,7 @@ const updateForm = reactive({
 	second_name: "",
 	login: "",
 	password: "",
-	role_id: 0,
+	role_id: 1,
 });
 function openUpdateDialog(row) {
 	Object.assign(updateForm, toRaw(row));
@@ -238,10 +238,14 @@ const Ref5 = ref();
 					<el-tag size="small">Admin: 1</el-tag><br />
 					<el-tag size="small" type="warning">Reception: 2</el-tag>
 					<el-form-item label="Роль" prop="role_id">
-						<el-input-number
+						<!-- <el-input-number
 							ref="Ref5"
 							v-model="usersForm.role_id"
-						></el-input-number>
+						></el-input-number> -->
+						<el-select v-model="usersForm.role_id" ref="Ref5">
+							<el-option label="1.admin" :value="1" />
+							<el-option label="2.reception" :value="2" />
+						</el-select>
 					</el-form-item>
 					<el-form-item>
 						<el-button
@@ -383,9 +387,13 @@ const Ref5 = ref();
 				<el-tag size="small">Admin: 1</el-tag><br />
 				<el-tag size="small" type="warning">Reception: 2</el-tag>
 				<el-form-item label="Роль" prop="role_id">
-					<el-input-number
+					<!-- <el-input-number
 						v-model="updateForm.role_id"
-					></el-input-number>
+					></el-input-number> -->
+					<el-select v-model="updateForm.role_id">
+						<el-option label="1.admin" :value="1" />
+						<el-option label="2.reception" :value="2" />
+					</el-select>
 				</el-form-item>
 			</el-form>
 			<template #footer>

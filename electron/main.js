@@ -67,10 +67,9 @@ function createSecondWindow() {
 			),
 			{ hash: "/client" },
 		);
-		console.log("production");
 	} else {
-		win.loadURL("http://localhost:3000/client");
-		console.log("development");
+		console.log("CLIENT DEV");
+		win.loadURL("http://localhost:3000/#client");
 	}
 }
 app.disableHardwareAcceleration();

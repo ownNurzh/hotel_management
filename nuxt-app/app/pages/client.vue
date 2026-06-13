@@ -130,10 +130,10 @@ await refreshRoomTypes();
 								justify-content: center;
 							"
 						>
-							<el-button type="success" dashed round
+							<el-button type="info" dashed round
 								>Всего за {{ room.price }} KZT</el-button
 							>
-							<el-button type="warning" dashed round
+							<el-button type="info" dashed round
 								>Можно жить до
 								{{ room.capacity }} людей</el-button
 							>
