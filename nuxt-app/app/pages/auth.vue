@@ -56,7 +56,7 @@ const submitForm = (formEl) => {
 						"
 					>
 						<img
-							src="/app-icon-t.png"
+							src="~/assets/app-icon-t.png"
 							style="width: 80px; height: 80px"
 						/>
 						<el-divider direction="vertical"></el-divider>

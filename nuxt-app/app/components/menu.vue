@@ -43,7 +43,10 @@ const profileVisible = ref(false);
 				margin: 10px 0px;
 			"
 		>
-			<img src="/app-icon.png" style="width: 65px; height: 65px" />
+			<img
+				src="~/assets/app-icon.png"
+				style="width: 65px; height: 65px"
+			/>
 			<el-divider direction="vertical"></el-divider>
 			<span style="font-weight: bold; color: white; font-size: 18px"
 				>Hotel System</span
