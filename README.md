@@ -9,6 +9,7 @@
   <b>Система бронирования и управления отелями</b><br/>
   <b>Hotel reservation and management system</b>
 </p>
+
 ![CI](https://github.com/ownNurzh/hotel_management/actions/workflows/node.js.yml/badge.svg)
 
 ---
